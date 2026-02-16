@@ -58,8 +58,8 @@ export default function AboutUs({ isActive, scrollVelocity }) {
   ];
 
   const vmSlides = [
-    { label: 'Mission', text: 'We design, organize, and deliver events that generate real business outcomes.' },
-    { label: 'Vision', text: 'To become the leading platform for meaningful B2B connections worldwide.' },
+    { label: 'Our Mission', text: 'We design, organize, and deliver events that generate real business outcomes.' },
+    { label: 'Our Vision', text: 'To become the leading platform for meaningful B2B connections worldwide.' },
   ];
 
   return (
