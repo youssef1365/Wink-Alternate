@@ -40,7 +40,15 @@ const Services = ({ isActive, scrollVelocity }) => {
         .service-number { display: inline-block; font-size: 0.75rem; color: var(--color-turquoise); padding: 0.25rem 0.75rem; background: rgba(64, 201, 201, 0.15); border-radius: 0.5rem; margin-bottom: 1.25rem; }
         .service-title { font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem; font-style: italic; }
         .service-description { font-size: 0.9rem; color: var(--color-silver); line-height: 1.7; }
-        @media (max-width: 768px) { .services-grid { grid-template-columns: 1fr; overflow-y: auto; } }
+
+        @media (max-width: 1024px) {
+          .services-sticky { top: 80px; height: calc(100vh - 80px); }
+          .services-card { height: auto; max-height: 85vh; overflow-y: auto; }
+          .services-grid { grid-template-columns: 1fr; gap: 1.5rem; padding-bottom: 2rem; }
+          .service-ghost-number { font-size: 80px; top: 0; }
+          .services-title-main { font-size: 2.2rem; }
+          .services-content { padding: 1.5rem; }
+        }
       `}</style>
 
       <div ref={containerRef} className="services-wrapper">
