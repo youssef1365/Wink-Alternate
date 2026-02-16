@@ -156,21 +156,36 @@ const Hero = ({ scrollVelocity = 0 }) => {
           opacity: 0.7;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
           .hero {
-            padding: 7rem 2rem 5rem;
+            padding: 6rem 1.5rem 3rem;
+            min-height: 100vh;
           }
           .hero-container {
+            max-width: 90vw;
+          }
+          .hero-title {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            width: 100%;
+            text-align: center;
+            margin-bottom: 1.5rem;
+          }
+          .hero-description {
+            font-size: 1.1rem;
             max-width: 100%;
+            margin-bottom: 2.5rem;
           }
           .hero-buttons {
             flex-direction: column;
+            gap: 1rem;
             width: 100%;
           }
-          .cta-button,
-          .secondary-link {
+          .cta-button {
             width: 100%;
-            text-align: center;
+            padding: 1.2rem;
+          }
+          .secondary-link {
+            padding: 0.5rem;
           }
         }
       `}</style>
