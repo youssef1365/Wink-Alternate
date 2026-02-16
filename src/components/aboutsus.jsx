@@ -110,7 +110,7 @@ export default function AboutUs({ isActive, scrollVelocity }) {
         }
         .aus-vm-slide.active { opacity: 1; transform: scale(1) translateY(0); }
         .aus-vm-slide.prev { opacity: 0; transform: scale(1.03) translateY(-15px); }
-        .aus-vm-label { font-size: 6rem; text-transform: uppercase; letter-spacing: 0.1em; color: #17b8c8; margin-bottom: 1rem; font-weight: 800; }
+        .aus-vm-label { font-size: 6rem; text-transform: uppercase; letter-spacing: 0.1rem; color: #17b8c8; margin-bottom: 1rem; font-weight: 800; line-height: 1.0; }
         .aus-vm-text { font-size: clamp(1.1rem, 1.8vw, 1.6rem); line-height: 1.5; color: white; font-weight: 500; }
         .aus-vm-nav { position: absolute; bottom: 3rem; left: 4rem; display: flex; gap: 0.6rem; align-items: center; }
         .aus-vm-dot { height: 4px; background: rgba(255,255,255,0.2); transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); border-radius: 2px; }
