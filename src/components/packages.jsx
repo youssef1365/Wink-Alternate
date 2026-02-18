@@ -122,21 +122,6 @@ const Packages = () => {
           ))}
         </motion.div>
 
-        <motion.div
-          className="pkg-footer"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-        >
-          <p className="pkg-footer-text">Choose a package designed for your organization’s objectives.</p>
-          <button className="pkg-contact-btn" onClick={openContactModal}>
-            <span>Contact Wink</span>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-        </motion.div>
 
       </section>
 
