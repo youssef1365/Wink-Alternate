@@ -61,7 +61,7 @@ const Vision = ({ text, subtext, isActive }) => {
                     color: token.color
                       ? token.color
                       : token.accent
-                      ? 'var(--color-accent, #FFFFFF)'
+                      ? 'var(--color-one)'
                       : undefined,
                   }}
                 >
@@ -117,7 +117,7 @@ const Vision = ({ text, subtext, isActive }) => {
         .vision-rule {
           width: 48px;
           height: 1.5px;
-          background: var(--color-primary, currentColor);
+          background: var(--color-third);
           opacity: 0.45;
           margin: 1.8rem 0;
           transform-origin: left center;
@@ -127,7 +127,7 @@ const Vision = ({ text, subtext, isActive }) => {
           font-size: clamp(1.9rem, 4.2vw, 3.8rem);
           font-weight: 800;
           line-height: 1.25;
-          color: var(--extra-color-third);
+          color: var(--color-third);
           text-transform: uppercase;
           letter-spacing: -0.02em;
           margin: 0;

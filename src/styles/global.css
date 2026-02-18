@@ -16,8 +16,8 @@
   --extra-color-one:    #ffffff;
   --extra-color-two:    #0eb2ae;
   --extra-color-third:  #44cba5;
-  --extra-color-fourth: #01536c;
-  --extra-color-fifth:  #213651;
+  --extra-color-fourth: #00CEC1;
+  --extra-color-fifth:  #D1DBDC
 
   --font-sans:      system-ui, -apple-system, sans-serif;
   --max-width:      1200px;
@@ -35,10 +35,10 @@
 :root[data-theme="light"] {
 
   /* Main Palette */
-  --color-one:          #7ABFB8;
+  --color-one:          #00CEC1;
   --color-two:          #D1DBDC;
   --color-third:        #003F5C;
-  --color-fourth:       #44cba5;
+  --color-fourth:       #7BDC9B;
 
   /* Extra Palette  */
   --extra-color-one:    #050a0f;
@@ -52,11 +52,12 @@
 
 html {
   font-size: 16px;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
 body {
   font-family: var(--font-sans);
-   color: var(--color-third);
+  color: var(--color-third);
   background-color: transparent;
   line-height: 1.6;
   transition: background-color var(--transition), color var(--transition);

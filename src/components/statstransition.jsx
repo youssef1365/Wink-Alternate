@@ -27,15 +27,17 @@ const Counter = ({ value, duration = 2 }) => {
 const StatsTransition = () => {
   const stats = [
     { label: "Years Experience", value: "15", suffix: "+" },
-    { label: "Events Managed",   value: "500", suffix: "+" },
-    { label: "Countries Reached", value: "50", suffix: "+" }
+    { label: "Events Managed",   value: "150", suffix: "+" },
+    { label: "Countries Reached", value: "35", suffix: "+" },
+    { label: "Meetings Organized" , value: "50k", suffix: "+"},
+    { label: "Efficiency Ratings", value: "75%", suffix: "+"},
+    { label: "Customer Satisfaction", value: "90%", suffix:"+"}
   ];
 
   return (
     <>
       <section className="stats-section">
 
-        {/* Eyebrow */}
         <motion.p
           className="stats-eyebrow"
           initial={{ opacity: 0, y: 12 }}
@@ -48,7 +50,6 @@ const StatsTransition = () => {
           <span className="eyebrow-line" />
         </motion.p>
 
-        {/* Title */}
         <motion.h2
           className="stats-title"
           initial={{ opacity: 0, y: 20 }}
@@ -59,7 +60,6 @@ const StatsTransition = () => {
           By The Numbers
         </motion.h2>
 
-        {/* Stats row */}
         <div className="stats-grid">
           {stats.map((stat, index) => (
             <motion.div
@@ -100,7 +100,7 @@ const StatsTransition = () => {
           font-weight: 700;
           letter-spacing: 0.28em;
           text-transform: uppercase;
-          color: var(--color-text-primary);
+          color: var(--color-third);
           opacity: 0.4;
           margin: 0 0 1.2rem 0;
         }
@@ -116,7 +116,7 @@ const StatsTransition = () => {
         .stats-title {
           font-size: clamp(2rem, 4vw, 3rem);
           font-weight: 800;
-          color: var(--color-text-primary);
+          color: var(--color-third);
           margin: 0 0 clamp(3rem, 6vw, 5rem) 0;
           letter-spacing: -0.02em;
           text-align: center;
@@ -129,14 +129,12 @@ const StatsTransition = () => {
           max-width: var(--max-width);
         }
 
-        /* ── STAT ITEM ── */
         .stat-item {
           display: flex;
           flex-direction: column;
           align-items: center;
           text-align: center;
           padding: 0 2rem;
-          /* Vertical separator between items */
           border-right: 1px solid rgba(255,255,255,0.07);
         }
 
@@ -144,11 +142,10 @@ const StatsTransition = () => {
           border-right: none;
         }
 
-        /* ── VALUE ── */
         .stat-value {
           font-size: clamp(3.5rem, 7vw, 6rem);
           font-weight: 800;
-          color: var(--color-text-primary, #fff);
+          color: var(--color-third);
           line-height: 1;
           letter-spacing: -0.03em;
           display: flex;
@@ -163,7 +160,6 @@ const StatsTransition = () => {
           letter-spacing: 0;
         }
 
-        /* ── SHORT DIVIDER UNDER VALUE ── */
         .stat-divider {
           width: 24px;
           height: 1.5px;
@@ -172,13 +168,12 @@ const StatsTransition = () => {
           opacity: 0.6;
         }
 
-        /* ── LABEL ── */
         .stat-label {
-          font-size: 0.7rem;
+          font-size: 1rem;
           font-weight: 700;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: var(--color-text-secondary, rgba(255,255,255,0.45));
+          color: var(--color-third, rgba(255,255,255,0.45));
         }
 
         @media (max-width: 768px) {

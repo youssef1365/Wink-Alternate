@@ -127,11 +127,11 @@ export default function ScrollController() {
           isActive={activeSection === "vision1"}
           text={[
             "DEEP",
-            { word: "HUMAN", color: "var(--extra-color-one)" },
-            { word: "EXPERTISE", color: "var(--extra-color-one)" },
+            { word: "HUMAN", color: "var(--color-one)" },
+            { word: "EXPERTISE", color: "var(--color-one)" },
             "MAKES",
-            { word: "SMART", color: "var(--extra-color-one)" },
-            { word: "CONNECTIONS", color: "var(--extra-color-one)" }
+            { word: "SMART", color: "var(--color-one)" },
+            { word: "CONNECTIONS", color: "var(--color-one)" }
           ]}
         />
       </div>
@@ -152,11 +152,11 @@ export default function ScrollController() {
             "DESIGNED",
             "TO",
             "CREATE",
-            { word: "GROWTH,", color: "var(--pure-white)" },
-            { word: "PARTNERSHIPS,", color: "var(--pure-white)" },
+            { word: "GROWTH",  color: "var(--color-one)" },
+            { word: "PARTNERSHIPS",  color: "var(--color-one)" },
             "AND",
             "LONG-TERM",
-            { word: "IMPACT.", color: "var(--pure-white)" }
+            { word: "IMPACT.",  color: "var(--color-one)" }
           ]}
         />
       </div>

@@ -230,11 +230,9 @@ const Events = () => {
         </motion.div>
       </section>
 
-      {/* ── MODAL ── */}
       <AnimatePresence>
         {selectedEvent && (
           <>
-            {/* Backdrop */}
             <motion.div
               className="modal-backdrop"
               initial={{ opacity: 0 }}
@@ -244,7 +242,6 @@ const Events = () => {
               onClick={() => setSelectedEvent(null)}
             />
 
-            {/* Panel */}
             <motion.div
               className="modal-panel"
               initial={{ opacity: 0, y: 24 }}
@@ -252,22 +249,18 @@ const Events = () => {
               exit={{ opacity: 0, y: 24 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             >
-              {/* Close button */}
               <button className="modal-close" onClick={() => setSelectedEvent(null)} aria-label="Close">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
                 </svg>
               </button>
 
-              {/* Tag */}
               <div className="modal-tag">
                 {selectedEvent.type === 'upcoming' ? 'Upcoming' : 'Past Event'}
               </div>
 
-              {/* Title */}
               <h2 className="modal-title">{selectedEvent.name}</h2>
 
-              {/* Meta */}
               <div className="modal-meta">
                 <span className="modal-meta-item">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -287,16 +280,12 @@ const Events = () => {
                 </span>
               </div>
 
-              {/* Divider */}
               <div className="modal-divider" />
 
-              {/* Description */}
               <p className="modal-description">{selectedEvent.description}</p>
 
-              {/* Details */}
               <p className="modal-details">{selectedEvent.details}</p>
 
-              {/* Photos — past events only */}
               {selectedEvent.type === 'past' && selectedEvent.photos && (
                 <div className="modal-photos-section">
                   <p className="modal-photos-label">Event Gallery</p>
@@ -310,7 +299,6 @@ const Events = () => {
                 </div>
               )}
 
-              {/* Footer CTA */}
               <div className="modal-footer">
                 <button
                   className="modal-cta"
@@ -488,7 +476,6 @@ const Events = () => {
         }
         .modal-close:hover { opacity: 1; background: rgba(255,255,255,0.1); }
 
-        /* ── TAG ── */
         .modal-tag {
           display: inline-block;
           font-size: 0.6rem;
@@ -503,7 +490,6 @@ const Events = () => {
           margin-bottom: 1.2rem;
         }
 
-        /* ── TITLE ── */
         .modal-title {
           font-size: clamp(1.6rem, 3vw, 2.2rem);
           font-weight: 800;
@@ -514,7 +500,6 @@ const Events = () => {
           padding-right: 2rem;
         }
 
-        /* ── META ── */
         .modal-meta {
           display: flex;
           gap: 1.5rem;
@@ -531,7 +516,6 @@ const Events = () => {
           color: var(--color-1, var(--color-text));
         }
 
-        /* ── DIVIDER ── */
         .modal-divider {
           width: 100%;
           height: 1px;

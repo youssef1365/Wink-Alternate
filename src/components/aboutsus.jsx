@@ -135,7 +135,7 @@ export default function AboutUs({ isActive, scrollVelocity }) {
             <motion.div className="aus-grid" style={{ opacity: contentOp }}>
               <motion.div className="aus-left" style={{ y: col1Y }}>
                 <div>
-                  <div className="aus-eyebrow">Point Virgul Agency</div>
+                  <div className="aus-eyebrow">WINK Agency</div>
                   <h2 className="aus-heading">The Wink Way.</h2>
                 </div>
                 <div>

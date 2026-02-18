@@ -32,8 +32,9 @@ const Hero = ({ scrollVelocity = 0 }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
-            WINK <br />
-             BUSINESS MATCHMAKING,<br />DONE RIGHT<br />
+            <span className="hero-line-1">WINK</span> <br />
+            <span className="hero-line-2">BUSINESS MATCHMAKING,</span> <br />
+            <span className="hero-line-3">DONE RIGHT</span>
           </motion.h1>
 
           <motion.p
@@ -62,14 +63,14 @@ const Hero = ({ scrollVelocity = 0 }) => {
             </button>
 
             <a
-              href="#services"
+              href="#events"
               className="secondary-link"
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('services')?.scrollIntoView({ behavior: "smooth" });
+                document.getElementById('events')?.scrollIntoView({ behavior: "smooth" });
               }}
             >
-              View Our Work
+              Upcoming Events
             </a>
           </motion.div>
         </div>
@@ -81,12 +82,12 @@ const Hero = ({ scrollVelocity = 0 }) => {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 7rem 5rem 3rem;
+          padding: 7rem 1rem 3rem;
           overflow: hidden;
         }
 
         .hero-container {
-          max-width: 50vw;
+          max-width: 1440px;
           width: 100%;
           will-change: transform;
         }
@@ -99,25 +100,26 @@ const Hero = ({ scrollVelocity = 0 }) => {
         }
 
         .hero-title {
-          font-size: 4rem;
           text-align: left;
-          line-height: 1.1;
+          line-height: 1;
           font-weight: 800;
-          color: var(--extra-color-third);
           margin-bottom: 2rem;
-          width: 60vw;
+          width: fit-content;
+          align-self: flex-start;
+          margin-left: 10vw;
+          display: flex;
+          flex-direction: column;
         }
 
-        .highlight {
-          color: var(--extra-color-third);
-          font-size: clamp(3rem, 10vw, 5rem);
-        }
+        .hero-line-1 { font-size : 5rem; }
+        .hero-line-2 { font-size : 5rem; white-space: nowrap; color : var(--color-one); }
+        .hero-line-3 { font-size : 5rem; }
 
         .hero-description {
           font-size: clamp(1.1rem, 2vw, 1.4rem);
           line-height: 1.7;
           color: var(--color-third);
-          max-width: 80%;
+          max-width: 800px;
           margin: 0 auto 3rem;
         }
 
@@ -125,6 +127,7 @@ const Hero = ({ scrollVelocity = 0 }) => {
           display: flex;
           gap: 1.5rem;
           align-items: center;
+          justify-content: center;
         }
 
         .cta-button {
@@ -157,35 +160,14 @@ const Hero = ({ scrollVelocity = 0 }) => {
         }
 
         @media (max-width: 1024px) {
-          .hero {
-            padding: 6rem 1.5rem 3rem;
-            min-height: 100vh;
-          }
-          .hero-container {
-            max-width: 90vw;
-          }
           .hero-title {
-            font-size: clamp(2rem, 8vw, 3.5rem);
-            width: 100%;
+            margin-left: 0;
+            align-self: center;
             text-align: center;
-            margin-bottom: 1.5rem;
           }
-          .hero-description {
-            font-size: 1.1rem;
-            max-width: 100%;
-            margin-bottom: 2.5rem;
-          }
+          .hero-line-1, .hero-line-2, .hero-line-3 { font-size: clamp(2rem, 8vw, 3.5rem); white-space: normal; }
           .hero-buttons {
             flex-direction: column;
-            gap: 1rem;
-            width: 100%;
-          }
-          .cta-button {
-            width: 100%;
-            padding: 1.2rem;
-          }
-          .secondary-link {
-            padding: 0.5rem;
           }
         }
       `}</style>

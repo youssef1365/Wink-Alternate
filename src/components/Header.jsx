@@ -132,7 +132,7 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
         .dropdown-list li a { padding: 0.65rem 1.4rem; color: var(--color-third); text-decoration: none; display: block; font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; }
 
         .nav-cta { display: flex; align-items: center; gap: 1rem; }
-        .cta-button-high-end { background: var(--extra-color-third); color: var(--extra-color-one); border: none; padding: 0.85rem 2rem; border-radius: 100px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.8rem; cursor: pointer; }
+        .cta-button-high-end { background: var(--color-third); color: var(--color-two); border: none; padding: 0.85rem 2rem; border-radius: 100px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.8rem; cursor: pointer; }
 
         .hamburger-menu { display: none; flex-direction: column; gap: 6px; background: none; border: none; cursor: pointer; }
         .hamburger-menu .line { width: 24px; height: 2px; background: var(--color-third); transition: 0.3s; }
@@ -157,6 +157,20 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           .hamburger-menu.is-active .line:nth-child(1) { transform: translateY(4px) rotate(45deg); }
           .hamburger-menu.is-active .line:nth-child(2) { transform: translateY(-4px) rotate(-45deg); }
         }
+    .cta-button-high-end {
+      transition: all 0.3s ease;
+    }
+
+    .cta-button-high-end:hover {
+      background-color: var(--color-fourth) ;
+      color: ;
+      transform: ;
+      box-shadow: ;
+    }
+
+    .cta-button-high-end:active {
+      transform: scale(0.98);
+    }
       `}</style>
     </motion.header>
   );

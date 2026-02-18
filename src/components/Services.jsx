@@ -31,15 +31,15 @@ const Services = ({ isActive, scrollVelocity }) => {
         .services-sticky { position: sticky; top: 90px; height: calc(100vh - 90px); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 0 1.5rem; }
         .services-card { width: 100%; max-width: 1400px; height: 85vh; max-height: 700px; border-radius: 16px; box-shadow: 0 32px 80px rgba(0, 77, 77, 0.4); overflow: hidden; position: relative; background: linear-gradient(to bottom right, rgba(44, 62, 80, 0.95), rgba(0, 77, 77, 0.95)); backdrop-filter: blur(24px); border: 1px solid rgba(127, 205, 205, 0.15); will-change: transform; }
         .services-content { position: relative; z-index: 1; height: 100%; padding: clamp(2rem, 4vw, 4rem); display: flex; flex-direction: column; }
-        .services-eyebrow { font-size: 2rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-mint-light); margin-bottom: 0; }
+        .services-eyebrow { font-size: 2rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--extra-color-fifth); margin-bottom: 0; }
         .services-title-main { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1.2; letter-spacing: -0.04em; margin: 0; color: white; font-style: italic;}
-        .services-subtitle { font-size: 1.2rem; line-height: 1.5; color: var(--color-silver); max-width: 500px; }
+        .services-subtitle { font-size: 1.2rem; line-height: 1.5; color: var(--extra-color-fifth); max-width: 500px; }
         .services-grid { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2rem; }
         .service-item { position: relative; padding: 2rem; border-radius: 12px; background: rgba(0, 77, 77, 0.2); border: 1px solid rgba(127, 205, 205, 0.15); }
         .service-ghost-number { position: absolute; top: -1rem; right: -0.5rem; font-size: 120px; font-weight: 900; color: rgba(127, 205, 205, 0.05); pointer-events: none; }
-        .service-number { display: inline-block; font-size: 0.75rem; color: var(--color-turquoise); padding: 0.25rem 0.75rem; background: rgba(64, 201, 201, 0.15); border-radius: 0.5rem; margin-bottom: 1.25rem; }
+        .service-number { display: inline-block; font-size: 0.75rem; color: var(--color-third); padding: 0.25rem 0.75rem; background: rgba(64, 201, 201, 0.15); border-radius: 0.5rem; margin-bottom: 1.25rem; }
         .service-title { font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.75rem; font-style: italic; }
-        .service-description { font-size: 0.9rem; color: var(--color-silver); line-height: 1.7; }
+        .service-description { font-size: 0.9rem; color: var(--extra-color-fifth); line-height: 1.7; }
 
         @media (max-width: 1024px) {
           .services-sticky { top: 80px; height: calc(100vh - 80px); }
