@@ -41,43 +41,45 @@ export default function ContactModal() {
             <button className="close-btn" onClick={onClose}>✕</button>
 
             <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
-              <div className="form-grid">
-                <div className="input-group">
-                  <label>Full Name</label>
-                  <input type="text" placeholder="Enter your full name" required />
+              <div className="form-scroll-container">
+                <div className="form-grid">
+                  <div className="input-group">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Enter your full name" required />
+                  </div>
+                  <div className="input-group">
+                    <label>Organization</label>
+                    <input type="text" placeholder="Company name" required />
+                  </div>
+                  <div className="input-group">
+                    <label>Business Email</label>
+                    <input type="email" placeholder="email@company.com" required />
+                  </div>
+                  <div className="input-group">
+                    <label>Country / Region</label>
+                    <input type="text" placeholder="e.g. Morocco, UAE" required />
+                  </div>
                 </div>
-                <div className="input-group">
-                  <label>Organization</label>
-                  <input type="text" placeholder="Company name" required />
-                </div>
-                <div className="input-group">
-                  <label>Business Email</label>
-                  <input type="email" placeholder="email@company.com" required />
-                </div>
-                <div className="input-group">
-                  <label>Country / Region</label>
-                  <input type="text" placeholder="e.g. Morocco, UAE" required />
-                </div>
-              </div>
 
-              <div className="input-group full-width spaced-group">
-                <label>Area of Interest</label>
-                <select required>
-                  <option value="">Select an option</option>
-                  <option value="matchmaking">B2B Matchmaking & Meetings</option>
-                  <option value="events">Trade Missions & Hosted Buyer Programs</option>
-                  <option value="strategy">Business Development & Market Entry</option>
-                </select>
-              </div>
+                <div className="input-group full-width spaced-group">
+                  <label>Area of Interest</label>
+                  <select required>
+                    <option value="">Select an option</option>
+                    <option value="matchmaking">B2B Matchmaking & Meetings</option>
+                    <option value="events">Trade Missions & Hosted Buyer Programs</option>
+                    <option value="strategy">Business Development & Market Entry</option>
+                  </select>
+                </div>
 
-              <div className="input-group full-width spaced-group">
-                <label>Objectives / Context</label>
-                <textarea rows="4" placeholder="Briefly describe your goals..."></textarea>
-              </div>
+                <div className="input-group full-width spaced-group">
+                  <label>Objectives / Context</label>
+                  <textarea rows="4" placeholder="Briefly describe your goals..."></textarea>
+                </div>
 
-              <button type="submit" className="submit-btn">
-                Request a discussion
-              </button>
+                <button type="submit" className="submit-btn">
+                  Request a discussion
+                </button>
+              </div>
             </form>
           </motion.div>
 
@@ -104,10 +106,29 @@ export default function ContactModal() {
               background: var(--extra-color-third);
               width: 100%;
               max-width: 750px;
+              max-height: 90vh;
               border-radius: 20px;
               padding: 40px;
               box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
               z-index: 10000;
+              display: flex;
+              flex-direction: column;
+            }
+
+            .form-scroll-container {
+              overflow-y: auto;
+              padding-right: 5px;
+              margin-top: 10px;
+            }
+
+            /* Custom scrollbar for better look */
+            .form-scroll-container::-webkit-scrollbar {
+              width: 4px;
+            }
+
+            .form-scroll-container::-webkit-scrollbar-thumb {
+              background: rgba(0, 0, 0, 0.1);
+              border-radius: 10px;
             }
 
             .close-btn {
@@ -120,6 +141,7 @@ export default function ContactModal() {
               cursor: pointer;
               color: #071e2b;
               opacity: 0.5;
+              z-index: 11;
             }
 
             .close-btn:hover {
@@ -165,6 +187,7 @@ export default function ContactModal() {
               border-radius: 8px;
               font-size: 0.9rem;
               color: #071e2b;
+              width: 100%;
             }
 
             input:focus {
@@ -193,16 +216,35 @@ export default function ContactModal() {
             }
 
             @media (max-width: 600px) {
+              .modal-overlay {
+                padding: 10px;
+              }
+
+              .modal-card {
+                padding: 30px 20px 20px 20px;
+                border-radius: 15px;
+              }
+
               .form-grid {
                 grid-template-columns: 1fr;
+                row-gap: 15px;
               }
 
               .input-group.full-width {
                 grid-column: span 1;
               }
 
-              .modal-card {
-                padding: 25px;
+              .spaced-group {
+                margin-bottom: 15px;
+              }
+
+              .submit-btn {
+                padding: 15px;
+                font-size: 0.8rem;
+              }
+
+              input, select, textarea {
+                font-size: 16px; /* Prevents auto-zoom on iOS */
               }
             }
           `}</style>

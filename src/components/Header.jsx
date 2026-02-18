@@ -47,6 +47,11 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
     setMobileMenuOpen(false);
   };
 
+  const handleMobileCta = () => {
+    window.dispatchEvent(new Event('openContactModal'));
+    setMobileMenuOpen(false);
+  };
+
   const navItems = ['home', 'services', 'packages', 'events'];
 
   return (
@@ -78,9 +83,7 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
             <li className="dropdown-wrapper" onMouseEnter={() => setIsWinkOpen(true)} onMouseLeave={() => setIsWinkOpen(false)}>
               <button className={`wink-trigger-btn nav-link ${activeSection === 'about' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'about')}>
                 <span className="nav-link-text">WINK</span>
-
               </button>
-
             </li>
           </ul>
 
@@ -108,69 +111,268 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
                 <li key={item}><a href={`#${item}`} onClick={(e) => handleNavClick(e, item)}>{item}</a></li>
               ))}
               <li><a href="#about" onClick={(e) => handleNavClick(e, 'about')}>Wink</a></li>
+              <li className="mobile-cta-wrapper">
+                <button className="cta-button-high-end mobile-cta" onClick={handleMobileCta}>
+                  Start a Project
+                </button>
+              </li>
             </ul>
           </motion.div>
         )}
       </AnimatePresence>
 
       <style>{`
-        .header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; width: 100%; padding: 1.1rem 0; background: transparent; transition: all 0.5s ease; }
-        .header.scrolled { padding: 0.35rem 0; backdrop-filter: blur(24px); border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
-        .nav-container { width: 100%; padding: 0 4vw; }
-        .nav { display: flex; justify-content: space-between; align-items: center; width: 100%; position: relative; }
-        .nav-logo { flex-shrink: 0; min-width: 220px; }
-        .dynamic-logo { height: 64px; width: 220px; background-image: var(--logo-url, url('/WinkWhite.png')); background-size: contain; background-repeat: no-repeat; background-position: left center; }
-        .theme-toggle-minimal { background-color: transparent; border: none; height: 60px; width: 60px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .theme-icon { height: 60px; width: 60px; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; }
-        .nav-links { display: flex; gap: clamp(1.4rem, 2.5vw, 3.2rem); list-style: none; align-items: center; position: absolute; left: 50%; transform: translateX(-50%); margin: 0; padding: 0; }
+        .header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 1000;
+          width: 100%;
+          padding: 1.1rem 0;
+          background: transparent;
+          transition: all 0.5s ease;
+        }
 
-        .nav-link { font-family: 'Montserrat', sans-serif; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.22em; font-weight: 700; color: var(--color-third); text-decoration: none; cursor: pointer; position: relative; opacity: 0.75; display: flex; align-items: center; gap: 0.35rem; border:none; background:none; }
-        .nav-link-dot { position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%) scale(0); width: 3px; height: 3px; border-radius: 50%; background: var(--color-third); transition: transform 0.3s ease; }
-        .nav-link.active .nav-link-dot { transform: translateX(-50%) scale(1); }
+        .header.scrolled {
+          padding: 0.35rem 0;
+          backdrop-filter: blur(24px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
 
-        .dropdown-list { position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); min-width: 160px; background: var(--extra-color-one); border-radius: 8px; padding: 0.6rem 0; list-style: none; border: 1px solid rgba(255,255,255,0.07); }
-        .dropdown-list li a { padding: 0.65rem 1.4rem; color: var(--color-third); text-decoration: none; display: block; font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; }
+        .nav-container {
+          width: 100%;
+          padding: 0 4vw;
+        }
 
-        .nav-cta { display: flex; align-items: center; gap: 1rem; }
-        .cta-button-high-end { background: var(--color-third); color: var(--color-two); border: none; padding: 0.85rem 2rem; border-radius: 100px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.8rem; cursor: pointer; }
+        .nav {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          position: relative;
+        }
 
-        .hamburger-menu { display: none; flex-direction: column; gap: 6px; background: none; border: none; cursor: pointer; }
-        .hamburger-menu .line { width: 24px; height: 2px; background: var(--color-third); transition: 0.3s; }
-        .mobile-overlay { display: none; }
+        .nav-logo {
+          flex-shrink: 0;
+          min-width: 220px;
+        }
+
+        .dynamic-logo {
+          height: 64px;
+          width: 220px;
+          background-image: var(--logo-url, url('/WinkWhite.png'));
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: left center;
+        }
+
+        .theme-toggle-minimal {
+          background-color: transparent;
+          border: none;
+          height: 60px;
+          width: 60px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .theme-icon {
+          height: 60px;
+          width: 60px;
+          font-size: 1.4rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .nav-links {
+          display: flex;
+          gap: clamp(1.4rem, 2.5vw, 3.2rem);
+          list-style: none;
+          align-items: center;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          margin: 0;
+          padding: 0;
+        }
+
+        .nav-link {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.82rem;
+          text-transform: uppercase;
+          letter-spacing: 0.22em;
+          font-weight: 700;
+          color: var(--color-third);
+          text-decoration: none;
+          cursor: pointer;
+          position: relative;
+          opacity: 0.75;
+          display: flex;
+          align-items: center;
+          gap: 0.35rem;
+          border: none;
+          background: none;
+        }
+
+        .nav-link-dot {
+          position: absolute;
+          bottom: -2px;
+          left: 50%;
+          transform: translateX(-50%) scale(0);
+          width: 3px;
+          height: 3px;
+          border-radius: 50%;
+          background: var(--color-third);
+          transition: transform 0.3s ease;
+        }
+
+        .nav-link.active .nav-link-dot {
+          transform: translateX(-50%) scale(1);
+        }
+
+        .dropdown-list {
+          position: absolute;
+          top: calc(100% + 12px);
+          left: 50%;
+          transform: translateX(-50%);
+          min-width: 160px;
+          background: var(--extra-color-one);
+          border-radius: 8px;
+          padding: 0.6rem 0;
+          list-style: none;
+          border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .dropdown-list li a {
+          padding: 0.65rem 1.4rem;
+          color: var(--color-third);
+          text-decoration: none;
+          display: block;
+          font-size: 0.62rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.18em;
+        }
+
+        .nav-cta {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        .cta-button-high-end {
+          background: var(--color-third);
+          color: var(--color-two);
+          border: none;
+          padding: 0.85rem 2rem;
+          border-radius: 100px;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.18em;
+          font-size: 0.8rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .cta-button-high-end:hover {
+          background-color: var(--color-fourth);
+        }
+
+        .cta-button-high-end:active {
+          transform: scale(0.98);
+        }
+
+        .hamburger-menu {
+          display: none;
+          flex-direction: column;
+          gap: 6px;
+          background: none;
+          border: none;
+          cursor: pointer;
+        }
+
+        .hamburger-menu .line {
+          width: 24px;
+          height: 2px;
+          background: var(--color-third);
+          transition: 0.3s;
+        }
 
         @media (max-width: 1024px) {
-          .desktop-only { display: none !important; }
-          .hamburger-menu { display: flex; z-index: 1001; }
-          .nav-links { display: none; }
-          .nav-logo { min-width: auto; }
-          .dynamic-logo { width: 140px; height: 40px; }
+          .desktop-only {
+            display: none !important;
+          }
+
+          .hamburger-menu {
+            display: flex;
+            z-index: 1001;
+          }
+
+          .nav-links {
+            display: none;
+          }
+
+          .nav-logo {
+            min-width: auto;
+          }
+
+          .dynamic-logo {
+            width: 140px;
+            height: 40px;
+          }
 
           .mobile-overlay {
-            display: flex; position: fixed; top: 0; right: 0; width: 100%; height: 100vh;
-            background: var(--extra-color-one); flex-direction: column; align-items: center;
-            justify-content: center; z-index: 1000;
+            display: flex;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--extra-color-one);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
           }
-          .mobile-links { list-style: none; text-align: center; padding: 0; }
-          .mobile-links li { margin: 1.5rem 0; }
-          .mobile-links a { color: var(--color-third); font-size: 1.5rem; text-transform: uppercase; font-weight: 800; text-decoration: none; }
 
-          .hamburger-menu.is-active .line:nth-child(1) { transform: translateY(4px) rotate(45deg); }
-          .hamburger-menu.is-active .line:nth-child(2) { transform: translateY(-4px) rotate(-45deg); }
+          .mobile-links {
+            list-style: none;
+            text-align: center;
+            padding: 0;
+          }
+
+          .mobile-links li {
+            margin: 1.5rem 0;
+          }
+
+          .mobile-links a {
+            color: var(--color-third);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            text-decoration: none;
+          }
+
+          .mobile-cta-wrapper {
+            margin-top: 2rem !important;
+          }
+
+          .mobile-cta {
+            font-size: 1.1rem;
+            padding: 1.2rem 2.5rem;
+          }
+
+          .hamburger-menu.is-active .line:nth-child(1) {
+            transform: translateY(4px) rotate(45deg);
+          }
+
+          .hamburger-menu.is-active .line:nth-child(2) {
+            transform: translateY(-4px) rotate(-45deg);
+          }
         }
-    .cta-button-high-end {
-      transition: all 0.3s ease;
-    }
-
-    .cta-button-high-end:hover {
-      background-color: var(--color-fourth) ;
-      color: ;
-      transform: ;
-      box-shadow: ;
-    }
-
-    .cta-button-high-end:active {
-      transform: scale(0.98);
-    }
       `}</style>
     </motion.header>
   );
