@@ -105,7 +105,13 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
 
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'tween', duration: 0.4 }} className="mobile-overlay">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="mobile-overlay"
+          >
             <ul className="mobile-links">
               {navItems.map((item) => (
                 <li key={item}><a href={`#${item}`} onClick={(e) => handleNavClick(e, item)}>{item}</a></li>
@@ -331,7 +337,9 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
             right: 0;
             width: 100%;
             height: 100vh;
-            background: var(--extra-color-one);
+            background: transparent;
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -363,6 +371,8 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           .mobile-cta {
             font-size: 1.1rem;
             padding: 1.2rem 2.5rem;
+            color: var(--color-third);
+            background: var(--color-bg);
           }
 
           .hamburger-menu.is-active .line:nth-child(1) {

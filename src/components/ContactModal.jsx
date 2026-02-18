@@ -221,12 +221,8 @@ export default function ContactModal() {
               }
 
               .modal-card {
-                /* Set to transparent to take the site's background feel */
-                background: transparent;
                 padding: 30px 20px 20px 20px;
                 border-radius: 15px;
-                /* Removed heavy shadows to keep it clean on mobile */
-                box-shadow: none;
               }
 
               .form-grid {
@@ -245,15 +241,10 @@ export default function ContactModal() {
               .submit-btn {
                 padding: 15px;
                 font-size: 0.8rem;
-                color: var(--color-third);
-                background: var(--color-bg);
               }
 
-              input,
-              select,
-              textarea {
-                font-size: 16px;
-                background: rgba(244, 247, 249, 0.9);
+              input, select, textarea {
+                font-size: 16px; /* Prevents auto-zoom on iOS */
               }
             }
           `}</style>
