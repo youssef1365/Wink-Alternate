@@ -6,17 +6,19 @@ const Services = ({ isActive, scrollVelocity }) => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"]
+    offset: ["start end", "end end"]
   });
 
   const springConfig = {
-    stiffness: Math.max(35, 90 - (scrollVelocity?.get() || 0) * 12),
-    damping: Math.min(28, 16 + (scrollVelocity?.get() || 0) * 2.5)
+    stiffness: 70,
+    damping: 30,
+    mass: 1,
+    restDelta: 0.001
   };
 
-  const y = useSpring(useTransform(scrollYProgress, [0, 0.2, 0.95, 1], ["100vh", "0vh", "0vh", "-20vh"]), springConfig);
-  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.15, 0.95, 1], [0, 1, 1, 0]), springConfig);
-  const contentOp = useTransform(scrollYProgress, [0.15, 0.4], [0, 1]);
+  const y = useSpring(useTransform(scrollYProgress, [0, 0.2, 0.8, 1], ["80vh", "0vh", "0vh", "-10vh"]), springConfig);
+  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]), springConfig);
+  const contentOp = useTransform(scrollYProgress, [0.1, 0.3], [0, 1]);
 
   const servicesData = [
     { id: "01", title: "B2B Matchmaking & Meetings", description: "Curated one-to-one meetings between qualified buyers, sellers, and partners — designed around clear objectives." },
@@ -27,7 +29,7 @@ const Services = ({ isActive, scrollVelocity }) => {
   return (
     <>
       <style>{`
-        .services-wrapper { min-height: 300vh; position: relative; background: var(--color-bg); }
+        .services-wrapper { min-height: 200vh; position: relative; background: var(--color-bg); }
         .services-sticky { position: sticky; top: 90px; height: calc(100vh - 90px); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 0 1.5rem; }
         .services-card { width: 100%; max-width: 1400px; height: 85vh; max-height: 700px; border-radius: 16px; box-shadow: 0 32px 80px rgba(0, 77, 77, 0.4); overflow: hidden; position: relative; background: linear-gradient(to bottom right, rgba(44, 62, 80, 0.95), rgba(0, 77, 77, 0.95)); backdrop-filter: blur(24px); border: 1px solid rgba(127, 205, 205, 0.15); will-change: transform; }
         .services-content { position: relative; z-index: 1; height: 100%; padding: clamp(2rem, 4vw, 4rem); display: flex; flex-direction: column; }
@@ -42,6 +44,7 @@ const Services = ({ isActive, scrollVelocity }) => {
         .service-description { font-size: 0.9rem; color: var(--extra-color-fifth); line-height: 1.7; }
 
         @media (max-width: 1024px) {
+          .services-wrapper { min-height: 180vh; }
           .services-sticky { top: 80px; height: calc(100vh - 80px); }
           .services-card { height: auto; max-height: 85vh; overflow-y: auto; }
           .services-grid { grid-template-columns: 1fr; gap: 1.5rem; padding-bottom: 2rem; }
