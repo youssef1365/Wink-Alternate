@@ -124,6 +124,9 @@ export default function AboutUs({ isActive, scrollVelocity }) {
           .aus-values-label { margin-top: 1rem; font-size: 1.1rem; }
           .aus-vm-label { font-size: 2.8rem; }
           .aus-sticky { top: 80px; height: calc(100vh - 80px); }
+          .aus-wrapper {
+              min-height: 320vh;
+          }
         }
       `}</style>
 

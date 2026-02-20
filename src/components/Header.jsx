@@ -308,6 +308,10 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
         }
 
         @media (max-width: 1024px) {
+            .header {
+                background: rgba(10, 10, 10, 0.75);
+                backdrop-filter: blur(30px);
+              }
           .desktop-only {
             display: none !important;
           }
