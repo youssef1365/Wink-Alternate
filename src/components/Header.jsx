@@ -337,13 +337,13 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
             right: 0;
             width: 100%;
             height: 100vh;
-            background: transparent;
+            background: var(--color-bg, rgba(0, 0, 0, 0.85));
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
+            z-index: 1001;
           }
 
           .mobile-links {
