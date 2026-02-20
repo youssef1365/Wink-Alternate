@@ -16,9 +16,9 @@ const Services = ({ isActive, scrollVelocity }) => {
     restDelta: 0.001
   };
 
-  const y = useSpring(useTransform(scrollYProgress, [0, 0.15, 0.85, 1], ["60vh", "0vh", "0vh", "-15vh"]), springConfig);
-  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]), springConfig);
-  const contentOp = useTransform(scrollYProgress, [0.1, 0.25], [0, 1]);
+  const y = useSpring(useTransform(scrollYProgress, [0, 0.2, 0.8, 1], ["20vh", "0vh", "0vh", "-10vh"]), springConfig);
+  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]), springConfig);
+  const contentOp = useTransform(scrollYProgress, [0.15, 0.3], [0, 1]);
 
   const servicesData = [
     { id: "01", title: "B2B Matchmaking & Meetings", description: "Curated one-to-one meetings between qualified buyers, sellers, and partners — designed around clear objectives." },
@@ -29,7 +29,7 @@ const Services = ({ isActive, scrollVelocity }) => {
   return (
     <>
       <style>{`
-        .services-wrapper { min-height: 350vh; position: relative; background: var(--color-bg); }
+        .services-wrapper { min-height: 300vh; position: relative; background: var(--color-bg); }
         .services-sticky { position: sticky; top: 90px; height: calc(100vh - 90px); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 0 1.5rem; }
         .services-card { width: 100%; max-width: 1400px; height: 85vh; max-height: 700px; border-radius: 16px; box-shadow: 0 32px 80px rgba(0, 77, 77, 0.4); overflow: hidden; position: relative; background: linear-gradient(to bottom right, rgba(44, 62, 80, 0.95), rgba(0, 77, 77, 0.95)); backdrop-filter: blur(24px); border: 1px solid rgba(127, 205, 205, 0.15); will-change: transform; }
         .services-content { position: relative; z-index: 1; height: 100%; padding: clamp(2rem, 4vw, 4rem); display: flex; flex-direction: column; }
@@ -44,20 +44,28 @@ const Services = ({ isActive, scrollVelocity }) => {
         .service-description { font-size: 0.9rem; color: var(--extra-color-fifth); line-height: 1.7; }
 
         @media (max-width: 1024px) {
-          .services-wrapper { min-height: 250vh; }
-          .services-sticky { top: 70px; height: calc(100vh - 70px); }
-          .services-card { height: 80vh; max-height: 750px; overflow-y: auto; }
-          .services-grid { grid-template-columns: 1fr; gap: 1rem; padding-bottom: 2rem; }
-          .service-item { padding: 1.5rem; }
-          .services-title-main { font-size: 2rem; }
-          .services-content { padding: 1.2rem; }
+          .services-wrapper { min-height: auto; padding: 4rem 1rem; }
+          .services-sticky { position: relative; top: 0; height: auto; overflow: visible; padding: 0; }
+          .services-card { height: auto; max-height: none; transform: none !important; opacity: 1 !important; box-shadow: none; border: none; background: none; backdrop-filter: none; }
+          .services-content { padding: 0; opacity: 1 !important; }
+          .services-grid { grid-template-columns: 1fr; gap: 1.5rem; margin-top: 3rem; }
+          .service-item { background: linear-gradient(to bottom right, rgba(44, 62, 80, 0.95), rgba(0, 77, 77, 0.95)); border: 1px solid rgba(127, 205, 205, 0.15); }
+          .services-title-main { font-size: 2.5rem; }
+          .services-eyebrow { font-size: 1.2rem; }
+          .service-ghost-number { display: none; }
         }
       `}</style>
 
       <div ref={containerRef} className="services-wrapper">
         <div className="services-sticky">
-          <motion.div className="services-card" style={{ y, opacity }}>
-            <motion.div className="services-content" style={{ opacity: contentOp }}>
+          <motion.div
+            className="services-card"
+            style={typeof window !== 'undefined' && window.innerWidth > 1024 ? { y, opacity } : {}}
+          >
+            <motion.div
+              className="services-content"
+              style={typeof window !== 'undefined' && window.innerWidth > 1024 ? { opacity: contentOp } : { opacity: 1 }}
+            >
               <div className="services-header">
                 <div className="services-eyebrow">What We Deliver</div>
                 <h2 className="services-title-main">Our Services</h2>
@@ -65,9 +73,8 @@ const Services = ({ isActive, scrollVelocity }) => {
               </div>
               <div className="services-grid">
                 {servicesData.map((service, index) => {
-                  const itemY = useSpring(useTransform(scrollYProgress, [0.15 + index * 0.03, 0.3 + index * 0.03], ["30px", "0px"]), springConfig);
                   return (
-                    <motion.div key={service.id} className="service-item" style={{ y: itemY }}>
+                    <motion.div key={service.id} className="service-item">
                       <div className="service-ghost-number">{service.id}</div>
                       <span className="service-number">{service.id}</span>
                       <h3 className="service-title">{service.title}</h3>
