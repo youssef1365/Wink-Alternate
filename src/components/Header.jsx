@@ -314,7 +314,7 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
 
           .hamburger-menu {
             display: flex;
-            z-index: 1001;
+            z-index: 1002;
           }
 
           .nav-links {
