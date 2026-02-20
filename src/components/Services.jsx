@@ -50,9 +50,10 @@ const Services = ({ isActive, scrollVelocity }) => {
           .services-content { padding: 0; opacity: 1 !important; }
           .services-grid { grid-template-columns: 1fr; gap: 1.5rem; margin-top: 3rem; }
           .service-item { background: linear-gradient(to bottom right, rgba(44, 62, 80, 0.95), rgba(0, 77, 77, 0.95)); border: 1px solid rgba(127, 205, 205, 0.15); }
-          .services-title-main { font-size: 2.5rem; }
-          .services-eyebrow { font-size: 1.2rem; }
-          .service-ghost-number { display: none; }
+          .services-title-main { font-size: 2.5rem; color: var(--color-third);}
+          .services-eyebrow { font-size: 1.2rem; color: var(--color-third) }
+          .service-ghost-number { display: none; color: var(--color-third)}
+          .services-subtitle {color: var(--color-third);}
         }
       `}</style>
 
