@@ -29,7 +29,7 @@ export default function AboutUs() {
 
   const vmSlides = [
     { label: 'Our Mission', text: 'We design, organize, and deliver events that generate real business outcomes.' },
-    { label: 'Our Vision', text: 'To become the leading platform for meaningful B2B connections worldwide.' },
+    { label: 'Our Vision',  text: 'To become the leading platform for meaningful B2B connections worldwide.' },
   ];
 
   return (
@@ -38,7 +38,7 @@ export default function AboutUs() {
         <motion.div className="aus-card" style={{ y, opacity }}>
           <div className="aus-grid">
 
-            {/* LEFT COLUMN */}
+            {/* LEFT — grey/secondary panel */}
             <motion.div className="aus-left" style={{ y: col1Y }}>
               <div className="aus-header">
                 <span className="aus-eyebrow">WINK Agency</span>
@@ -57,19 +57,12 @@ export default function AboutUs() {
               </div>
             </motion.div>
 
-            {/* RIGHT COLUMN */}
+            {/* RIGHT — navy gradient panel */}
             <div className="aus-right">
-              {/*
-                Desktop: absolute positioned slides (original behaviour).
-                Mobile: only the active slide is shown, no absolute positioning
-                so there's zero empty space.
-              */}
+              {/* Desktop: absolute stacked slides */}
               <div className="aus-slides-desktop">
                 {vmSlides.map((slide, i) => (
-                  <div
-                    key={i}
-                    className={`aus-vm-slide ${i === slideIndex ? 'active' : i < slideIndex ? 'prev' : ''}`}
-                  >
+                  <div key={i} className={`aus-vm-slide ${i === slideIndex ? 'active' : i < slideIndex ? 'prev' : ''}`}>
                     <span className="aus-vm-label">{slide.label}</span>
                     <p className="aus-vm-text">{slide.text}</p>
                   </div>
@@ -81,11 +74,11 @@ export default function AboutUs() {
                 </div>
               </div>
 
-              {/* Mobile: just show the active slide as normal flow content */}
+              {/* Mobile: simple in-flow content, no absolute positioning */}
               <div className="aus-slides-mobile">
                 <span className="aus-vm-label">{vmSlides[slideIndex].label}</span>
                 <p className="aus-vm-text">{vmSlides[slideIndex].text}</p>
-                <div className="aus-vm-nav">
+                <div className="aus-vm-nav-mobile">
                   {vmSlides.map((_, i) => (
                     <div key={i} className={`aus-vm-dot ${i === slideIndex ? 'active' : ''}`} />
                   ))}
@@ -98,7 +91,7 @@ export default function AboutUs() {
       </div>
 
       <style>{`
-        /* ── Desktop (unchanged) ───────────────────────────────────────────── */
+        /* ── Desktop (original — untouched) ───────────────────────────────── */
         .aus-wrapper {
           min-height: 300vh;
           position: relative;
@@ -164,7 +157,8 @@ export default function AboutUs() {
           opacity: 0.6;
         }
 
-        .aus-tech-highlight { font-weight: 900; color: var(--text-main); opacity: 1; }
+        .aus-tech-highlight { font-weight: 900; color: var(--text-main); }
+        .text-highlight { color: var(--color-teal); }
 
         .aus-narrative-text {
           font-size: clamp(1rem, 1.2vw, 1.4rem);
@@ -173,18 +167,13 @@ export default function AboutUs() {
           max-width: 500px;
         }
 
-        .text-highlight { color: var(--color-teal); }
-
-        /* Right panel — the teal/navy gradient side */
         .aus-right {
           background: linear-gradient(155deg, var(--color-navy) 0%, #001a26 100%);
           position: relative;
           overflow: hidden;
         }
 
-        /* Desktop slides: absolutely stacked, JS drives active/prev classes */
         .aus-slides-desktop {
-          display: block;
           position: relative;
           height: 100%;
         }
@@ -241,31 +230,43 @@ export default function AboutUs() {
 
         .aus-vm-dot.active { background: var(--color-teal); width: 60px; }
 
-        /* ── Mobile ─────────────────────────────────────────────────────────── */
+        /* ── Mobile ─────────────────────────────────────────────────────────
+           Key decisions:
+           1. Remove sticky + 300vh wrapper entirely — no scroll-jacking,
+              card sits in normal document flow, zero empty space.
+           2. Disable framer-motion y/opacity so card is always fully visible.
+           3. Use in-flow mobile slides (no absolute) so navy panel sizes
+              to its content and the two-tone grey/navy look is preserved.
+        ─────────────────────────────────────────────────────────────────── */
         @media (max-width: 1024px) {
-          /* Wrapper: just enough to let the scroll trigger fire */
-          .aus-wrapper { min-height: 200vh; }
-
-          /* Sticky still works — card sits centered in the viewport */
-          .aus-sticky {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow: hidden;
+          .aus-wrapper {
+            min-height: auto; /* ← kills the 300vh empty space */
+            padding: 4rem 0;
           }
 
-          /* Card: auto height so it fits content, capped so it doesn't overflow vh */
-          .aus-card {
+          .aus-sticky {
+            position: relative; /* ← no more sticky scroll-jacking */
+            top: auto;
             height: auto;
-            max-height: 88vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+          }
+
+          /* Override framer-motion inline styles so card is always visible */
+          .aus-card {
+            opacity: 1 !important;
+            transform: none !important;
+            height: auto !important;
+            max-height: none;
             width: 92vw;
             border-radius: 20px;
-            overflow: hidden; /* keep rounded corners clipping */
+            overflow: hidden; /* keep rounded corners */
           }
 
-          /* Stack left on top of right */
           .aus-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr; /* stack */
             height: auto;
           }
 
@@ -274,53 +275,50 @@ export default function AboutUs() {
             gap: 1.5rem;
           }
 
-          .aus-heading { font-size: clamp(1.8rem, 7vw, 2.8rem); }
+          .aus-heading      { font-size: clamp(1.8rem, 7vw, 2.8rem); }
           .aus-narrative-text { font-size: 0.95rem; }
           .aus-values-label { font-size: 1rem; }
 
-          /* Right panel: explicit height so the navy gradient is always visible */
+          /* Navy panel — sized by its content (the mobile slides) */
           .aus-right {
-            overflow: visible;
-            min-height: 220px;
+            overflow: hidden;
+            /* no min-height needed — the mobile slides provide the height */
           }
 
-          /* Hide the desktop absolute-positioned slides on mobile
-             — they cause the blank space because position:absolute
-               doesn't push the container height                      */
+          /* Hide desktop absolute slides */
           .aus-slides-desktop { display: none; }
 
-          /* Show the simple flow version instead */
+          /* Show mobile flow slides — these size the navy panel naturally */
           .aus-slides-mobile {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 2rem 1.75rem 3.5rem;
+            padding: 2.5rem 1.75rem;
             gap: 1rem;
-            position: relative;
           }
 
           .aus-slides-mobile .aus-vm-label {
-            font-size: clamp(1.8rem, 7vw, 2.8rem);
+            font-size: clamp(1.8rem, 7vw, 2.5rem);
+            margin-bottom: 0.75rem;
           }
 
           .aus-slides-mobile .aus-vm-text {
             font-size: 0.95rem;
             max-width: 100%;
+            color: var(--color-silver);
           }
 
-          /* Nav dots: relative so they sit below the text */
-          .aus-slides-mobile .aus-vm-nav {
-            position: relative;
-            bottom: auto;
-            left: auto;
-            margin-top: 1rem;
+          .aus-vm-nav-mobile {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.25rem;
           }
         }
 
         @media (max-width: 480px) {
-          .aus-card { max-height: 92vh; }
+          .aus-wrapper { padding: 3rem 0; }
           .aus-left { padding: 1.5rem 1.25rem; }
-          .aus-slides-mobile { padding: 1.5rem 1.25rem 2.5rem; }
+          .aus-slides-mobile { padding: 1.75rem 1.25rem; }
         }
       `}</style>
     </section>
