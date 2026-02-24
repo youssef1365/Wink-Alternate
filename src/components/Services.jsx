@@ -16,7 +16,7 @@ const Services = ({ isActive, scrollVelocity }) => {
     restDelta: 0.001
   };
 
-  const y = useSpring(useTransform(scrollYProgress,  [0, 0.05, 0.65, 1],["90vh", "0vh", "0vh", "-25vh"]), springConfig);
+  const y = useSpring(useTransform(scrollYProgress, [0, 0.2, 0.8, 1], ["20vh", "0vh", "0vh", "-10vh"]), springConfig);
   const opacity = useSpring(useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]), springConfig);
   const contentOp = useTransform(scrollYProgress, [0.15, 0.3], [0, 1]);
 
