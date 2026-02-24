@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ContactModal() {
   const [isOpen, setIsOpen] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const handleOpen = () => setIsOpen(true);
@@ -11,14 +13,51 @@ export default function ContactModal() {
   }, []);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : 'unset';
   }, [isOpen]);
 
-  const onClose = () => setIsOpen(false);
+  const onClose = () => {
+    setIsOpen(false);
+    setStatusMessage("");
+  };
+
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      setIsSubmitting(true);
+      setStatusMessage("");
+
+      const data = new FormData(e.target);
+      const payload = Object.fromEntries(data.entries());
+
+      try {
+        const res = await fetch("/api/send-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: payload.fullName,
+            email: payload.email,
+            organization: payload.organization,
+            country: payload.country,
+            interest: payload.interest,
+            message: payload.objectives
+          }),
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          setStatusMessage("Success! We will contact you shortly.");
+          e.target.reset();
+        } else {
+          setStatusMessage(result.error || result.message || "Server error. Please try again.");
+        }
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setStatusMessage("Connection error. Please check your internet or SSL.");
+      } finally {
+        setIsSubmitting(false);
+      }
+    };
 
   return (
     <AnimatePresence>
@@ -40,30 +79,30 @@ export default function ContactModal() {
           >
             <button className="close-btn" onClick={onClose}>✕</button>
 
-            <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
+            <form className="contact-form" onSubmit={handleSubmit}>
               <div className="form-scroll-container">
                 <div className="form-grid">
                   <div className="input-group">
                     <label>Full Name</label>
-                    <input type="text" placeholder="Enter your full name" required />
+                    <input type="text" name="fullName" placeholder="Enter your full name" required />
                   </div>
                   <div className="input-group">
                     <label>Organization</label>
-                    <input type="text" placeholder="Company name" required />
+                    <input type="text" name="organization" placeholder="Company name" required />
                   </div>
                   <div className="input-group">
                     <label>Business Email</label>
-                    <input type="email" placeholder="email@company.com" required />
+                    <input type="email" name="email" placeholder="email@company.com" required />
                   </div>
                   <div className="input-group">
                     <label>Country / Region</label>
-                    <input type="text" placeholder="e.g. Morocco, UAE" required />
+                    <input type="text" name="country" placeholder="e.g. Morocco, UAE" required />
                   </div>
                 </div>
 
                 <div className="input-group full-width spaced-group">
                   <label>Area of Interest</label>
-                  <select required>
+                  <select name="interest" required>
                     <option value="">Select an option</option>
                     <option value="matchmaking">B2B Matchmaking & Meetings</option>
                     <option value="events">Trade Missions & Hosted Buyer Programs</option>
@@ -73,17 +112,29 @@ export default function ContactModal() {
 
                 <div className="input-group full-width spaced-group">
                   <label>Objectives / Context</label>
-                  <textarea rows="4" placeholder="Briefly describe your goals..."></textarea>
+                  <textarea name="objectives" rows="4" placeholder="Briefly describe your goals..." />
                 </div>
 
-                <button type="submit" className="submit-btn">
-                  Request a discussion
+                <button type="submit" className="submit-btn" disabled={isSubmitting}>
+                  {isSubmitting ? "Sending..." : "Request a discussion"}
                 </button>
+
+                {statusMessage && (
+                  <p className={`status-message visible`} style={{
+                    color: statusMessage.includes('Success') ? '#2ecc71' : '#e74c3c',
+                    marginTop: '15px',
+                    textAlign: 'center',
+                    fontWeight: 'bold'
+                  }}>
+                    {statusMessage}
+                  </p>
+                )}
               </div>
             </form>
           </motion.div>
 
-          <style jsx>{`
+
+          <style>{`
             .modal-overlay {
               position: fixed;
               inset: 0;
@@ -244,7 +295,7 @@ export default function ContactModal() {
               }
 
               input, select, textarea {
-                font-size: 16px; /* Prevents auto-zoom on iOS */
+                font-size: 16px;
               }
             }
           `}</style>

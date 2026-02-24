@@ -1,0 +1,49 @@
+---
+// SEO.astro
+const {
+  title = "WINK | B2B Business Matchmaking",
+  description = "WINK is a global B2B matchmaking and business development firm that helps organizations turn meetings into measurable business outcomes.",
+  keywords = "B2B, Business matchmaking, WINK",
+  url = "https://wink-consulting.com",
+  image = "https://wink-consulting.com/WinkWhite.jpg",
+} = Astro.props;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "WINK",
+  "url": url,
+  "logo": image,
+  "sameAs": [
+    "https://https://www.linkedin.com/company/b2bbywink/",
+    "https://https://www.instagram.com/b2bbywink/"
+  ],
+  "description": description
+};
+---
+
+<head>
+  <!-- Basic SEO -->
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="keywords" content={keywords} />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={url} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={image} />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={image} />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+    {JSON.stringify(structuredData)}
+  </script>
+</head>

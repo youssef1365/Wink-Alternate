@@ -93,7 +93,7 @@ const Vision = ({ text, subtext, isActive }) => {
         />
       </motion.div>
 
-      <style jsx>{`
+      <style>{`
         .vision-section {
           min-height: 60vh;
           display: flex;

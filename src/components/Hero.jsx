@@ -1,6 +1,9 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-
+export const heroSEO = {
+  title: "WINK | Business Matchmaking Done Right",
+  description: "WINK is a global B2B matchmaking and business development firm that helps organizations turn meetings into measurable business outcomes."
+};
 const Hero = ({ scrollVelocity = 0 }) => {
   const containerRef = useRef(null);
 

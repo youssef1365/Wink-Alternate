@@ -337,7 +337,7 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
             right: 0;
             width: 100%;
             height: 100vh;
-            background: var(--color-bg, rgba(0, 0, 0, 0.85));
+            background: transparent;
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
             flex-direction: column;

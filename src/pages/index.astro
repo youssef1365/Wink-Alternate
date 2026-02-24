@@ -2,13 +2,21 @@
 import '../styles/global.css';
 import ScrollController from '../components/ScrollController.jsx';
 import ContactModal from '../components/ContactModal.jsx';
+import SEO from '../components/SEO.astro';
 ---
 
 <html lang="en">
   <head>
+    <SEO
+        title="WINK | Business Matchmaking Done Right"
+        description="WINK helps companies worldwide turn B2B meetings into measurable business outcomes."
+        keywords="B2B, Business Matchmaking, WINK, Business Development"
+        url="https://wink-consulting.com"
+        image="https://wink-consulting.com/og-image.jpg"
+    />
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/WinkBlue.png" />
-    <link rel="icon" href="/WinkBlue.png" />
+    <link rel="icon" type="image/svg+xml" href="/WinkWhite.png" />
+    <link rel="icon" href="/WinkWhite.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>Wink-Consulting</title>
@@ -31,7 +39,6 @@ import ContactModal from '../components/ContactModal.jsx';
 <style>
   html {
     scroll-behavior: smooth;
-    font-style:
   }
 
   section {
@@ -64,7 +71,6 @@ import ContactModal from '../components/ContactModal.jsx';
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     background-repeat: repeat;
     background-size: 200px 200px;
     transition: opacity 0.5s ease;

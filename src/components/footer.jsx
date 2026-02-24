@@ -1,15 +1,24 @@
 import { motion } from 'framer-motion';
 
-const Footer = () => {
+const Footer = ({ setShowModal }) => {
   const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleContactClick = (e) => {
+    e.preventDefault();
+    if (setShowModal) {
+      setShowModal(true);
+    } else {
+      window.dispatchEvent(new Event('openContactModal'));
+    }
+  };
+
   return (
     <>
-      <style jsx>{`
+      <style>{`
         .footer-wrapper {
           background: linear-gradient(
             to bottom,
@@ -213,7 +222,7 @@ const Footer = () => {
           background: none;
           border: none;
           color: var(--color-third);
-          font-size:1rem;
+          font-size: 1rem;
           display: flex;
           align-items: center;
           gap: 0.5rem;
@@ -230,7 +239,6 @@ const Footer = () => {
       <footer className="footer-wrapper">
         <div className="footer-container">
           <div className="footer-grid">
-
             <div className="footer-brand">
               <a href="/" className="footer-logo-link" aria-label="Wink Home">
                 <div className="footer-logo-img" />
@@ -256,12 +264,24 @@ const Footer = () => {
             <div className="footer-section">
               <h4 className="footer-title">Contact</h4>
               <div className="footer-contact-item">
-                <svg className="footer-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                </svg>
-                <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" className="footer-link">
-                  19 Rue Jbel Al Iyachi, Agdal, Rabat, Morocco
-                </a>
+                <div className="footer-social">
+                  {[
+                    { name: 'LN', url: 'https://www.linkedin.com/company/b2bbywink/' },
+                    { name: 'FB', url: 'https://facebook.com/wink-consulting' },
+                    { name: 'IG', url: 'https://www.instagram.com/b2bbywink/' }
+                  ].map((social) => (
+                    <motion.a
+                      key={social.name}
+                      href={social.url}
+                      className="footer-social-link"
+                      whileHover={{ y: -3 }}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {social.name}
+                    </motion.a>
+                  ))}
+                </div>
               </div>
               <div className="footer-contact-item">
                 <svg className="footer-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -275,37 +295,20 @@ const Footer = () => {
 
             <div className="footer-section">
               <h4 className="footer-title">Are You Interested?</h4>
-              <form className="footer-newsletter-form" onSubmit={(e) => e.preventDefault()}>
-                <button className="footer-discussion-btn">Request a Discussion</button>
+              <form className="footer-newsletter-form" onSubmit={handleContactClick}>
+                <button type="submit" className="footer-discussion-btn">
+                  Request a Discussion
+                </button>
               </form>
-              <div className="footer-social">
-                {[
-                  { name: 'LN', url: 'https://www.linkedin.com/company/b2bbywink/' },
-                  { name: 'FB', url: 'https://facebook.com/wink-consulting' },
-                  { name: 'IG', url: 'https://www.instagram.com/b2bbywink/' }
-                ].map((social) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.url}
-                    className="footer-social-link"
-                    whileHover={{ y: -3 }}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {social.name}
-                  </motion.a>
-                ))}
-              </div>
             </div>
-
           </div>
         </div>
 
         <div className="footer-bottom">
           <div className="footer-bottom-container">
-           <a href="https://pointvirgul.com" target="_blank" rel="noopener noreferrer" className="footer-copyright" style={{ textDecoration: 'none' }}>
-             © {currentYear} PointVirgul. All Rights Reserved.
-           </a>
+            <a href="https://pointvirgul.com" target="_blank" rel="noopener noreferrer" className="footer-copyright" style={{ textDecoration: 'none' }}>
+              © {currentYear} PointVirgul. All Rights Reserved.
+            </a>
             <motion.button onClick={scrollToTop} className="footer-back-to-top">
               <span>Back to top</span>
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14">
