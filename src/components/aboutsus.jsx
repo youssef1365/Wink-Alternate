@@ -17,7 +17,6 @@ export default function AboutUs() {
     restDelta: 0.001
   };
 
-  // Entry and Exit animations for the sticky card
   const y = useSpring(
     useTransform(
       scrollYProgress,
@@ -32,10 +31,8 @@ export default function AboutUs() {
     springConfig
   );
 
-  // Parallax shifts for the columns
   const col1Y = useTransform(scrollYProgress, [0.1, 0.3], ["40px", "0px"]);
 
-  // Trigger the Mission/Vision slide swap halfway through the scroll
   const slideTrigger = useTransform(scrollYProgress, v => {
     if (v < 0.5) return 0;
     return 1;
@@ -87,7 +84,6 @@ export default function AboutUs() {
                 </div>
               ))}
 
-              {/* Slide Navigation Dots */}
               <div className="aus-vm-nav">
                 {vmSlides.map((_, i) => (
                   <div
@@ -103,7 +99,7 @@ export default function AboutUs() {
 
       <style>{`
         .aus-wrapper {
-          min-height: 300vh; /* Controlled height for the scroll experience */
+          min-height: 300vh;
           position: relative;
           background: var(--bg-primary);
         }
@@ -240,11 +236,86 @@ export default function AboutUs() {
           width: 60px;
         }
 
+        /* ── Mobile ─────────────────────────────────────────────────────────── */
         @media (max-width: 1024px) {
-          .aus-grid { grid-template-columns: 1fr; }
-          .aus-right { display: none; } /* Simplified for mobile */
-          .aus-card { height: auto; padding-bottom: 3rem; }
-          .aus-wrapper { min-height: 150vh; }
+          /* Give the wrapper enough room for both panels stacked */
+          .aus-wrapper {
+            min-height: auto;
+          }
+
+          /* On mobile we don't want sticky scroll-jacking —
+             just let the card sit naturally in the flow */
+          .aus-sticky {
+            position: relative;
+            height: auto;
+            padding: 6rem 0 4rem;
+            overflow: visible;
+          }
+
+          /* Card grows to fit its content */
+          .aus-card {
+            height: auto;
+            width: 92vw;
+            border-radius: 24px;
+            overflow: visible; /* let content breathe */
+          }
+
+          /* Stack left then right */
+          .aus-grid {
+            grid-template-columns: 1fr;
+            height: auto;
+          }
+
+          .aus-left {
+            padding: 2.5rem 2rem;
+            gap: 2rem;
+          }
+
+          .aus-heading {
+            font-size: clamp(2rem, 8vw, 3rem);
+          }
+
+          .aus-narrative-text {
+            font-size: 1rem;
+          }
+
+          /* Show the right panel on mobile — just make it static, not absolute */
+          .aus-right {
+            display: block;
+            border-radius: 0 0 24px 24px;
+            min-height: 280px;
+            position: relative; /* already set but ensure no absolute weirdness */
+          }
+
+          /* Slides: stack and show both, or keep the active-only logic */
+          .aus-vm-slide {
+            position: relative;
+            inset: auto;
+            padding: 2.5rem 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            /* keep transition for the JS-driven active class */
+          }
+
+          .aus-vm-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+          }
+
+          .aus-vm-label {
+            font-size: clamp(2rem, 8vw, 3rem);
+          }
+
+          .aus-vm-text {
+            font-size: 1rem;
+          }
+
+          .aus-vm-nav {
+            position: relative;
+            bottom: auto;
+            left: auto;
+            padding: 0 2rem 2rem;
+          }
         }
       `}</style>
     </section>

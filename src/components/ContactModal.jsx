@@ -22,42 +22,42 @@ export default function ContactModal() {
   };
 
   const handleSubmit = async (e) => {
-      e.preventDefault();
-      setIsSubmitting(true);
-      setStatusMessage("");
+    e.preventDefault();
+    setIsSubmitting(true);
+    setStatusMessage("");
 
-      const data = new FormData(e.target);
-      const payload = Object.fromEntries(data.entries());
+    const data = new FormData(e.target);
+    const payload = Object.fromEntries(data.entries());
 
-      try {
-        const res = await fetch("/api/send-email", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: payload.fullName,
-            email: payload.email,
-            organization: payload.organization,
-            country: payload.country,
-            interest: payload.interest,
-            message: payload.objectives
-          }),
-        });
+    try {
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: payload.fullName,
+          email: payload.email,
+          organization: payload.organization,
+          country: payload.country,
+          interest: payload.interest,
+          message: payload.objectives
+        }),
+      });
 
-        const result = await res.json();
+      const result = await res.json();
 
-        if (res.ok) {
-          setStatusMessage("Success! We will contact you shortly.");
-          e.target.reset();
-        } else {
-          setStatusMessage(result.error || result.message || "Server error. Please try again.");
-        }
-      } catch (err) {
-        console.error("Fetch error:", err);
-        setStatusMessage("Connection error. Please check your internet or SSL.");
-      } finally {
-        setIsSubmitting(false);
+      if (res.ok) {
+        setStatusMessage("Success! We will contact you shortly.");
+        e.target.reset();
+      } else {
+        setStatusMessage(result.error || result.message || "Server error. Please try again.");
       }
-    };
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setStatusMessage("Connection error. Please check your internet or SSL.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -77,7 +77,9 @@ export default function ContactModal() {
             exit={{ opacity: 0, scale: 0.9, y: 30 }}
             className="modal-card"
           >
-            <button className="close-btn" onClick={onClose}>✕</button>
+            <div className="modal-header">
+              <button className="close-btn" onClick={onClose}>✕</button>
+            </div>
 
             <form className="contact-form" onSubmit={handleSubmit}>
               <div className="form-scroll-container">
@@ -120,7 +122,7 @@ export default function ContactModal() {
                 </button>
 
                 {statusMessage && (
-                  <p className={`status-message visible`} style={{
+                  <p className="status-message visible" style={{
                     color: statusMessage.includes('Success') ? '#2ecc71' : '#e74c3c',
                     marginTop: '15px',
                     textAlign: 'center',
@@ -133,7 +135,6 @@ export default function ContactModal() {
             </form>
           </motion.div>
 
-
           <style>{`
             .modal-overlay {
               position: fixed;
@@ -143,6 +144,15 @@ export default function ContactModal() {
               align-items: center;
               justify-content: center;
               padding: 20px;
+              /* On mobile, anchor to top so the card doesn't get pushed
+                 above the viewport when the keyboard opens              */
+              align-items: flex-end;
+            }
+
+            @media (min-width: 601px) {
+              .modal-overlay {
+                align-items: center;
+              }
             }
 
             .modal-backdrop {
@@ -157,46 +167,60 @@ export default function ContactModal() {
               background: var(--extra-color-third);
               width: 100%;
               max-width: 750px;
-              max-height: 90vh;
+              /* Fill almost the full viewport height and let the inner
+                 scroll container handle overflow — never clips content   */
+              height: 90dvh;
+              max-height: 90dvh;
               border-radius: 20px;
-              padding: 40px;
+              padding: 0;          /* padding moved inside for control   */
               box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
               z-index: 10000;
               display: flex;
               flex-direction: column;
+              overflow: hidden;    /* clip border-radius cleanly         */
             }
 
-            .form-scroll-container {
-              overflow-y: auto;
-              padding-right: 5px;
-              margin-top: 10px;
-            }
-
-            /* Custom scrollbar for better look */
-            .form-scroll-container::-webkit-scrollbar {
-              width: 4px;
-            }
-
-            .form-scroll-container::-webkit-scrollbar-thumb {
-              background: rgba(0, 0, 0, 0.1);
-              border-radius: 10px;
+            /* ── Sticky header row with close button ───────────────────────── */
+            .modal-header {
+              flex-shrink: 0;
+              display: flex;
+              justify-content: flex-end;
+              padding: 20px 20px 0;
             }
 
             .close-btn {
-              position: absolute;
-              top: 20px;
-              right: 20px;
               background: none;
               border: none;
               font-size: 1.5rem;
               cursor: pointer;
               color: #071e2b;
               opacity: 0.5;
-              z-index: 11;
+              line-height: 1;
+              padding: 4px;
             }
 
-            .close-btn:hover {
-              opacity: 1;
+            .close-btn:hover { opacity: 1; }
+
+            /* ── Scrollable form area ───────────────────────────────────────── */
+            .contact-form {
+              flex: 1;             /* take remaining height after header  */
+              min-height: 0;       /* critical: allows flex child to shrink */
+              display: flex;
+              flex-direction: column;
+            }
+
+            .form-scroll-container {
+              flex: 1;
+              min-height: 0;
+              overflow-y: auto;
+              -webkit-overflow-scrolling: touch;
+              padding: 16px 40px 32px;
+            }
+
+            .form-scroll-container::-webkit-scrollbar { width: 4px; }
+            .form-scroll-container::-webkit-scrollbar-thumb {
+              background: rgba(0, 0, 0, 0.1);
+              border-radius: 10px;
             }
 
             .form-grid {
@@ -213,13 +237,8 @@ export default function ContactModal() {
               gap: 8px;
             }
 
-            .input-group.full-width {
-              grid-column: span 2;
-            }
-
-            .spaced-group {
-              margin-bottom: 25px;
-            }
+            .input-group.full-width { grid-column: span 2; }
+            .spaced-group { margin-bottom: 25px; }
 
             label {
               font-size: 0.7rem;
@@ -236,12 +255,14 @@ export default function ContactModal() {
               background: #f4f7f9;
               border: 1px solid #e2e8f0;
               border-radius: 8px;
-              font-size: 0.9rem;
+              font-size: 16px;   /* ≥16px prevents iOS auto-zoom on focus */
               color: #071e2b;
               width: 100%;
             }
 
-            input:focus {
+            input:focus,
+            select:focus,
+            textarea:focus {
               outline: none;
               border-color: #17b8c8;
             }
@@ -259,6 +280,8 @@ export default function ContactModal() {
               letter-spacing: 0.1em;
               cursor: pointer;
               transition: all 0.3s ease;
+              /* Ensure it's always reachable above mobile keyboard */
+              min-height: 56px;
             }
 
             .submit-btn:hover {
@@ -266,36 +289,40 @@ export default function ContactModal() {
               transform: translateY(-2px);
             }
 
+            /* ── Mobile ─────────────────────────────────────────────────────── */
             @media (max-width: 600px) {
               .modal-overlay {
-                padding: 10px;
+                padding: 0;        /* card goes edge-to-edge at bottom    */
               }
 
               .modal-card {
-                padding: 30px 20px 20px 20px;
-                border-radius: 15px;
+                /* Sheet style: full width, slides up from the bottom */
+                height: 92dvh;
+                max-height: 92dvh;
+                border-radius: 20px 20px 0 0;
+                width: 100%;
+                max-width: 100%;
+              }
+
+              .form-scroll-container {
+                padding: 12px 20px 40px;
               }
 
               .form-grid {
                 grid-template-columns: 1fr;
-                row-gap: 15px;
+                row-gap: 16px;
+                margin-bottom: 16px;
               }
 
               .input-group.full-width {
                 grid-column: span 1;
               }
 
-              .spaced-group {
-                margin-bottom: 15px;
-              }
+              .spaced-group { margin-bottom: 16px; }
 
               .submit-btn {
-                padding: 15px;
-                font-size: 0.8rem;
-              }
-
-              input, select, textarea {
-                font-size: 16px;
+                padding: 16px;
+                font-size: 0.85rem;
               }
             }
           `}</style>

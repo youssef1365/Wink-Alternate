@@ -313,17 +313,15 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           transform: scale(0.98);
         }
 
-        /* ── Hamburger ─────────────────────────────────────────────────────── */
         .hamburger-menu {
           display: none;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           gap: 6px;
-          background: none;
+          background: transparent;
           border: none;
           cursor: pointer;
-          /* Match the theme-toggle size so they sit on the same baseline */
           height: 44px;
           width: 44px;
           padding: 0;
@@ -351,7 +349,6 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           }
 
           .hamburger-menu {
-            /* Now visible and vertically centered with logo & toggle */
             display: flex;
             z-index: 1002;
           }
@@ -369,7 +366,6 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
             height: 40px;
           }
 
-          /* nav-cta already uses align-items: center so toggle + hamburger align */
           .nav-cta {
             gap: 0.25rem;
           }
@@ -380,16 +376,14 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
             top: 0;
             left: 0;
             right: 0;
-            /* Use fixed height anchored to top so scrolling the page can't shift it */
             height: 100dvh;
-            background: transparent;
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 1001;
-            /* Prevent the overlay itself from scrolling */
             overflow: hidden;
             pointer-events: all;
           }
