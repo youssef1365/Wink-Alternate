@@ -49,6 +49,7 @@ export default function ScrollController() {
   const touchStartY = useRef(0);
   const touchLastY = useRef(0);
   const touchLastTime = useRef(Date.now());
+  const touchInsideInternalScroll = useRef(false);
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
@@ -99,14 +100,34 @@ export default function ScrollController() {
       }
     };
 
+    // Check if a touch target is inside an internally-scrollable container
+    // (anything that can scroll on its own, like the AboutUs inner list)
+    const isInsideInternalScroll = (target) => {
+      let el = target;
+      while (el && el !== document.body) {
+        const style = window.getComputedStyle(el);
+        const overflowY = style.overflowY;
+        const canScroll =
+          (overflowY === "auto" || overflowY === "scroll") &&
+          el.scrollHeight > el.clientHeight;
+        if (canScroll) return true;
+        el = el.parentElement;
+      }
+      return false;
+    };
+
     // Touch events for mobile velocity tracking
     const handleTouchStart = (e) => {
+      touchInsideInternalScroll.current = isInsideInternalScroll(e.target);
       touchStartY.current = e.touches[0].clientY;
       touchLastY.current = e.touches[0].clientY;
       touchLastTime.current = Date.now();
     };
 
     const handleTouchMove = (e) => {
+      // Let internal scroll containers handle their own scrolling untouched
+      if (touchInsideInternalScroll.current) return;
+
       const currentY = e.touches[0].clientY;
       const currentTime = Date.now();
       const timeDelta = currentTime - touchLastTime.current;
@@ -122,6 +143,7 @@ export default function ScrollController() {
     };
 
     const handleTouchEnd = () => {
+      touchInsideInternalScroll.current = false;
       // Decay velocity after touch ends
       const decay = setInterval(() => {
         const current = velocity.get();
@@ -180,6 +202,15 @@ export default function ScrollController() {
 
   return (
     <>
+      {/*
+        Global mobile-safety styles injected once.
+        These complement whatever CSS your components already have.
+        Key fixes:
+          - Use --vh custom property for true mobile viewport height
+          - Prevent horizontal overflow
+          - Smooth momentum scrolling on iOS
+          - Prevent tap highlight & text-size-adjust quirks
+      */}
       <style>{`
         *,
         *::before,
@@ -191,6 +222,7 @@ export default function ScrollController() {
           -webkit-text-size-adjust: 100%;
           text-size-adjust: 100%;
           scroll-behavior: smooth;
+          /* Prevent horizontal scroll bleed */
           overflow-x: hidden;
         }
 
@@ -198,12 +230,15 @@ export default function ScrollController() {
           overflow-x: hidden;
           /* Momentum scroll on iOS */
           -webkit-overflow-scrolling: touch;
+          /* Remove tap highlight on mobile */
           -webkit-tap-highlight-color: transparent;
         }
 
+        /* Mobile-safe full-height helper.
            Use  height: calc(var(--vh, 1vh) * 100)  in child components
            instead of  height: 100vh  to avoid address-bar issues on iOS/Android. */
 
+        /* Prevent images / media from overflowing their containers */
         img,
         video,
         svg,
@@ -213,11 +248,13 @@ export default function ScrollController() {
           height: auto;
         }
 
+        /* Prevent long words / URLs from breaking layouts on narrow screens */
         p, li, h1, h2, h3, h4, h5, h6, span, a {
           overflow-wrap: break-word;
           word-break: break-word;
         }
 
+        /* Minimum touch target size (WCAG 2.5.8) */
         button,
         [role="button"],
         a,
@@ -229,18 +266,21 @@ export default function ScrollController() {
           min-width: 44px;
         }
 
+        /* Remove 300ms tap delay on mobile */
         a,
         button,
         [role="button"] {
           touch-action: manipulation;
         }
 
+        /* Prevent inputs from triggering iOS zoom (font-size must be ≥16px) */
         input,
         select,
         textarea {
           font-size: max(16px, 1em);
         }
 
+        /* Section wrapper: prevent any child from punching outside */
         [data-section-id] {
           position: relative;
           overflow-x: hidden;

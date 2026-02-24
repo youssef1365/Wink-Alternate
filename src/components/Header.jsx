@@ -19,12 +19,15 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
     const handleScroll = () => {
       const currentY = window.scrollY;
       setIsScrolled(currentY > 50);
-      setHidden(currentY > lastY.current && currentY > 300 && scrollVelocity > 1.5);
+      // Never hide the header when mobile menu is open
+      if (!mobileMenuOpen) {
+        setHidden(currentY > lastY.current && currentY > 300 && scrollVelocity > 1.5);
+      }
       lastY.current = currentY;
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [scrollVelocity]);
+  }, [scrollVelocity, mobileMenuOpen]);
 
   useEffect(() => {
     const unsubscribe = scrollProgress.on('change', (v) => {
@@ -32,6 +35,16 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
     });
     return unsubscribe;
   }, [scrollProgress]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileMenuOpen]);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -146,6 +159,15 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
+        /* When mobile menu is open, always keep backdrop visible regardless of scroll */
+        .header.mobile-active {
+          backdrop-filter: blur(24px) !important;
+          -webkit-backdrop-filter: blur(24px) !important;
+          background: transparent !important;
+          padding: 1.1rem 0 !important;
+          border-bottom: none !important;
+        }
+
         .nav-container {
           width: 100%;
           padding: 0 4vw;
@@ -176,21 +198,21 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
         .theme-toggle-minimal {
           background-color: transparent;
           border: none;
-          height: 60px;
-          width: 60px;
+          height: 44px;
+          width: 44px;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
+          padding: 0;
         }
 
         .theme-icon {
-          height: 60px;
-          width: 60px;
           font-size: 1.4rem;
           display: flex;
           align-items: center;
           justify-content: center;
+          line-height: 1;
         }
 
         .nav-links {
@@ -291,20 +313,36 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           transform: scale(0.98);
         }
 
+        /* ── Hamburger ─────────────────────────────────────────────────────── */
         .hamburger-menu {
           display: none;
           flex-direction: column;
+          justify-content: center;
+          align-items: center;
           gap: 6px;
           background: none;
           border: none;
           cursor: pointer;
+          /* Match the theme-toggle size so they sit on the same baseline */
+          height: 44px;
+          width: 44px;
+          padding: 0;
         }
 
         .hamburger-menu .line {
           width: 24px;
           height: 2px;
           background: var(--color-third);
-          transition: 0.3s;
+          transition: transform 0.3s ease, opacity 0.3s ease;
+          transform-origin: center;
+        }
+
+        .hamburger-menu.is-active .line:nth-child(1) {
+          transform: translateY(4px) rotate(45deg);
+        }
+
+        .hamburger-menu.is-active .line:nth-child(2) {
+          transform: translateY(-4px) rotate(-45deg);
         }
 
         @media (max-width: 1024px) {
@@ -313,6 +351,7 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           }
 
           .hamburger-menu {
+            /* Now visible and vertically centered with logo & toggle */
             display: flex;
             z-index: 1002;
           }
@@ -330,13 +369,19 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
             height: 40px;
           }
 
+          /* nav-cta already uses align-items: center so toggle + hamburger align */
+          .nav-cta {
+            gap: 0.25rem;
+          }
+
           .mobile-overlay {
             display: flex;
             position: fixed;
             top: 0;
+            left: 0;
             right: 0;
-            width: 100%;
-            height: 100vh;
+            /* Use fixed height anchored to top so scrolling the page can't shift it */
+            height: 100dvh;
             background: transparent;
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
@@ -344,12 +389,16 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
             align-items: center;
             justify-content: center;
             z-index: 1001;
+            /* Prevent the overlay itself from scrolling */
+            overflow: hidden;
+            pointer-events: all;
           }
 
           .mobile-links {
             list-style: none;
             text-align: center;
             padding: 0;
+            margin: 0;
           }
 
           .mobile-links li {
@@ -373,14 +422,6 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
             padding: 1.2rem 2.5rem;
             color: var(--color-third);
             background: var(--color-bg);
-          }
-
-          .hamburger-menu.is-active .line:nth-child(1) {
-            transform: translateY(4px) rotate(45deg);
-          }
-
-          .hamburger-menu.is-active .line:nth-child(2) {
-            transform: translateY(-4px) rotate(-45deg);
           }
         }
       `}</style>
