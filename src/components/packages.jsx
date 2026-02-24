@@ -48,7 +48,6 @@ const Packages = () => {
     <>
       <section className="packages-section">
 
-        {/* Heading */}
         <motion.h2
           className="packages-heading"
           initial={{ opacity: 0, y: 20 }}
@@ -59,7 +58,6 @@ const Packages = () => {
           Our Packages
         </motion.h2>
 
-        {/* Subtitle */}
         <motion.p
           className="packages-subheading"
           initial={{ opacity: 0, y: 14 }}
@@ -70,7 +68,6 @@ const Packages = () => {
           Tailored programs for every stakeholder
         </motion.p>
 
-        {/* Grid */}
         <motion.div
           className="packages-grid"
           variants={containerVariants}
@@ -84,10 +81,8 @@ const Packages = () => {
               className="pkg-card"
               variants={cardVariants}
             >
-              {/* Hover spotlight */}
               <div className="card-spotlight" />
 
-              {/* Ghost watermark number */}
               <div className="pkg-number-bg">{pkg.id}</div>
 
               <div className="card-top">
@@ -354,6 +349,7 @@ const Packages = () => {
         @media (max-width: 768px) {
           .packages-grid { grid-template-columns: 1fr; }
           .pkg-footer { padding: 2rem 1.5rem; }
+          .pkg-number-bg { font-size: 4rem; }
         }
       `}</style>
     </>

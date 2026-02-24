@@ -38,7 +38,6 @@ export default function AboutUs() {
         <motion.div className="aus-card" style={{ y, opacity }}>
           <div className="aus-grid">
 
-            {/* LEFT — grey/secondary panel */}
             <motion.div className="aus-left" style={{ y: col1Y }}>
               <div className="aus-header">
                 <span className="aus-eyebrow">WINK Agency</span>
@@ -57,7 +56,6 @@ export default function AboutUs() {
               </div>
             </motion.div>
 
-            {/* RIGHT — navy gradient panel */}
             <div className="aus-right">
               {/* Desktop: absolute stacked slides */}
               <div className="aus-slides-desktop">
@@ -74,7 +72,7 @@ export default function AboutUs() {
                 </div>
               </div>
 
-              {/* Mobile: simple in-flow content, no absolute positioning */}
+              {/* Mobile: in-flow, no absolute positioning */}
               <div className="aus-slides-mobile">
                 <span className="aus-vm-label">{vmSlides[slideIndex].label}</span>
                 <p className="aus-vm-text">{vmSlides[slideIndex].text}</p>
@@ -91,7 +89,6 @@ export default function AboutUs() {
       </div>
 
       <style>{`
-        /* ── Desktop (original — untouched) ───────────────────────────────── */
         .aus-wrapper {
           min-height: 300vh;
           position: relative;
@@ -229,44 +226,27 @@ export default function AboutUs() {
         }
 
         .aus-vm-dot.active { background: var(--color-teal); width: 60px; }
-
-        /* ── Mobile ─────────────────────────────────────────────────────────
-           Key decisions:
-           1. Remove sticky + 300vh wrapper entirely — no scroll-jacking,
-              card sits in normal document flow, zero empty space.
-           2. Disable framer-motion y/opacity so card is always fully visible.
-           3. Use in-flow mobile slides (no absolute) so navy panel sizes
-              to its content and the two-tone grey/navy look is preserved.
-        ─────────────────────────────────────────────────────────────────── */
         @media (max-width: 1024px) {
           .aus-wrapper {
-            min-height: auto; /* ← kills the 300vh empty space */
+            min-height: auto;
             padding: 4rem 0;
           }
 
           .aus-sticky {
-            position: relative; /* ← no more sticky scroll-jacking */
+            position: relative;
             top: auto;
             height: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             overflow: visible;
           }
 
-          /* Override framer-motion inline styles so card is always visible */
           .aus-card {
             opacity: 1 !important;
             transform: none !important;
-            height: auto !important;
-            max-height: none;
-            width: 92vw;
-            border-radius: 20px;
-            overflow: hidden; /* keep rounded corners */
+            height: auto;
           }
 
           .aus-grid {
-            grid-template-columns: 1fr; /* stack */
+            grid-template-columns: 1fr;
             height: auto;
           }
 
@@ -275,20 +255,15 @@ export default function AboutUs() {
             gap: 1.5rem;
           }
 
-          .aus-heading      { font-size: clamp(1.8rem, 7vw, 2.8rem); }
+          .aus-heading       { font-size: clamp(1.8rem, 7vw, 2.8rem); }
           .aus-narrative-text { font-size: 0.95rem; }
-          .aus-values-label { font-size: 1rem; }
-
-          /* Navy panel — sized by its content (the mobile slides) */
+          .aus-values-label  { font-size: 1rem; }
           .aus-right {
             overflow: hidden;
-            /* no min-height needed — the mobile slides provide the height */
           }
 
-          /* Hide desktop absolute slides */
           .aus-slides-desktop { display: none; }
 
-          /* Show mobile flow slides — these size the navy panel naturally */
           .aus-slides-mobile {
             display: flex;
             flex-direction: column;
@@ -298,14 +273,13 @@ export default function AboutUs() {
           }
 
           .aus-slides-mobile .aus-vm-label {
-            font-size: clamp(1.8rem, 7vw, 2.5rem);
+            font-size: clamp(2rem, 8vw, 3rem);
             margin-bottom: 0.75rem;
           }
 
           .aus-slides-mobile .aus-vm-text {
-            font-size: 0.95rem;
+            font-size: 1rem;
             max-width: 100%;
-            color: var(--color-silver);
           }
 
           .aus-vm-nav-mobile {
@@ -318,7 +292,7 @@ export default function AboutUs() {
         @media (max-width: 480px) {
           .aus-wrapper { padding: 3rem 0; }
           .aus-left { padding: 1.5rem 1.25rem; }
-          .aus-slides-mobile { padding: 1.75rem 1.25rem; }
+          .aus-slides-mobile { padding: 1.75rem 1.25rem 2rem; }
         }
       `}</style>
     </section>
