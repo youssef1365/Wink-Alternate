@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 const Events = () => {
   const [filter, setFilter] = useState('upcoming');
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [lightboxSrc, setLightboxSrc] = useState(null);
 
   useEffect(() => {
     if (selectedEvent) {
@@ -18,11 +19,17 @@ const Events = () => {
 
   useEffect(() => {
     const handleKey = (e) => {
-      if (e.key === 'Escape') setSelectedEvent(null);
+      if (e.key === 'Escape') {
+        if (lightboxSrc) {
+          setLightboxSrc(null);
+        } else {
+          setSelectedEvent(null);
+        }
+      }
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, []);
+  }, [lightboxSrc]);
 
 const allEvents = [
   {
@@ -31,7 +38,7 @@ const allEvents = [
     name: 'FOODEX JAPAN 2026',
     location: 'Japan',
     date: 'March 10 (Tue.) - 13 (Fri.), 2026',
-    details: 'Morocco will showcase the richness and diversity of its agri-food sector at FOODEX Japan 2026, one of Asia’s leading international food and beverage exhibitions. Renowned for its Mediterranean and North African culinary heritage, Morocco offers a wide range of high-quality, export-ready food products, combining tradition, natural resources, and modern production standards. From fresh fruits and vegetables to processed snacks, aromatic herbs and natural ingredients, premium olive and terroir oils, and seafood products, Moroccan exhibitors present solutions tailored to the needs of international markets.'
+    details: 'Morocco will showcase the richness and diversity of its agri-food sector at FOODEX Japan 2026, one of Asia\'s leading international food and beverage exhibitions. Renowned for its Mediterranean and North African culinary heritage, Morocco offers a wide range of high-quality, export-ready food products, combining tradition, natural resources, and modern production standards. From fresh fruits and vegetables to processed snacks, aromatic herbs and natural ingredients, premium olive and terroir oils, and seafood products, Moroccan exhibitors present solutions tailored to the needs of international markets.'
   },
   {
     id: 2,
@@ -76,7 +83,7 @@ const allEvents = [
     name: '8th China International Import Expo (CIIE 2025)',
     location: 'China',
     date: '5 au 10 novembre 2025',
-    details: 'The Morocco Foodex Pavilion at the China International Import Expo (CIIE 2025) highlights Morocco’s dynamic agri-food sector and its growing partnership with China. Led by Morocco Foodex, the delegation includes key national institutions — AMDIE, FENAGRI, IBERRY, SIMAPA, Zalar Agri, and AGRUMAR — all committed to strengthening trade, investment, and institutional collaboration between Morocco and China.',
+    details: 'The Morocco Foodex Pavilion at the China International Import Expo (CIIE 2025) highlights Morocco\'s dynamic agri-food sector and its growing partnership with China. Led by Morocco Foodex, the delegation includes key national institutions — AMDIE, FENAGRI, IBERRY, SIMAPA, Zalar Agri, and AGRUMAR — all committed to strengthening trade, investment, and institutional collaboration between Morocco and China.',
     results: { meetings: 60, buyers: 37 },
     photos: [
       '/PHOTOS-POUR-LE-SITE-WEB/China-Moroccofoodex/china1.jpeg',
@@ -103,7 +110,7 @@ const allEvents = [
     name: 'Mission commerciale du textile et des matières premières au Maroc',
     location: 'Casablanca, Morocco',
     date: '5 au 7 Novembre 2025 (Mission globale du 4 au 8 novembre)',
-    details: 'La Mission commerciale du textile et des matières premières – Maroc (Casablanca), organisée par l’Association des Exportateurs de Textile et de Matières Premières d’Istanbul (İTHİB) en collaboration avec le Ministère turc du Commerce, vise à renforcer les relations économiques et commerciales entre la Turquie et le Maroc. Cet événement, qui se déroulera du 4 au 8 novembre 2025 à Casablanca, offrira une plateforme unique de rencontres B2B entre les principaux fabricants turcs de textile et de matières premières et les importateurs, distributeurs, industriels et décideurs marocains.',
+    details: 'La Mission commerciale du textile et des matières premières – Maroc (Casablanca), organisée par l\'Association des Exportateurs de Textile et de Matières Premières d\'Istanbul (İTHİB) en collaboration avec le Ministère turc du Commerce, vise à renforcer les relations économiques et commerciales entre la Turquie et le Maroc. Cet événement, qui se déroulera du 4 au 8 novembre 2025 à Casablanca, offrira une plateforme unique de rencontres B2B entre les principaux fabricants turcs de textile et de matières premières et les importateurs, distributeurs, industriels et décideurs marocains.',
     results: { meetings: 942, buyers: 247 },
   },
   {
@@ -112,7 +119,7 @@ const allEvents = [
     name: 'GULFOOD 2026 - Meet Leading Qatari F&B Manufacturers',
     location: 'Dubai Exhibition Centre (DEC), Expo City Dubai',
     date: '26 au 30 Janvier 2026',
-    details: 'Taking place in January 2026 at the Dubai Exhibition Centre (DEC) at Expo City Dubai, Gulfood is the world’s largest and most influential food and beverage exhibition. Bringing together global producers, distributors, retailers, and decision-makers, Gulfood offers unparalleled access to the Middle East, Africa, and Asia’s rapidly expanding F&B markets. Discover new trends, launch poducts, connect with high-level buyers, and transform meetings into long-term commercial partnerships.',
+    details: 'Taking place in January 2026 at the Dubai Exhibition Centre (DEC) at Expo City Dubai, Gulfood is the world\'s largest and most influential food and beverage exhibition. Bringing together global producers, distributors, retailers, and decision-makers, Gulfood offers unparalleled access to the Middle East, Africa, and Asia\'s rapidly expanding F&B markets. Discover new trends, launch products, connect with high-level buyers, and transform meetings into long-term commercial partnerships.',
     results: { meetings: 260, buyers: 162 },
     photos: [
       '/PHOTOS-POUR-LE-SITE-WEB/GULFOOD-2026/gulfood1.jpeg',
@@ -134,7 +141,7 @@ const allEvents = [
     name: 'Multi-Sector Food Trade Mission',
     location: 'Variable',
     date: 'Variable (Généralement automne 2025)',
-    details: 'Dans le cadre du renforcement des échanges commerciaux entre la Turquie et le Maroc, cet événement B2B réunit une délégation d’entreprises turques leaders du secteur agroalimentaire et des importateurs marocains qualifiés à la recherche de nouveaux partenariats durables. Organisée avec le soutien d’institutions turques et marocaines, cette mission sectorielle constitue une plateforme stratégique de mise en relation directe entre fabricants turcs et acteurs marocains de l’importation, de la distribution et de la grande consommation.',
+    details: 'Dans le cadre du renforcement des échanges commerciaux entre la Turquie et le Maroc, cet événement B2B réunit une délégation d\'entreprises turques leaders du secteur agroalimentaire et des importateurs marocains qualifiés à la recherche de nouveaux partenariats durables.',
     results: { meetings: 128, buyers: 29 },
   },
   {
@@ -143,7 +150,7 @@ const allEvents = [
     name: 'Big 5 Global Dubai',
     location: 'Dubai World Trade Centre',
     date: '24 au 27 novembre 2025',
-    details: 'Taking place from November 24 – 27, 2025 at the Dubai World Trade Centre, Big 5 Global is the largest construction event in the Middle East and Africa. Tap into the regions $9.18 trillion construction market, connect with serious buyers, and turn conversations into contracts. Qatar Exports is the export promotion arm of Qatar Development Bank, dedicated to enhancing the global competitiveness of Qatari products and construction services.',
+    details: 'Taking place from November 24 – 27, 2025 at the Dubai World Trade Centre, Big 5 Global is the largest construction event in the Middle East and Africa.',
     results: { meetings: 142, buyers: 94 },
     photos: [
       '/PHOTOS-POUR-LE-SITE-WEB/BIG5-2025/big51.jpeg',
@@ -169,7 +176,7 @@ const allEvents = [
     name: 'Kitchenware & Tableware Trade Mission',
     location: 'To be confirmed',
     date: 'Dates spécifiques à confirmer par formulaire (Saison 2025)',
-    details: 'Une mission de prospection ciblée permettant aux fabricants turcs d\'articles de cuisine et de table de rencontrer des acheteurs stratégiques, des distributeurs spécialisés et des décideurs du secteur HORECA (Hôtels, Restaurants, Cafés) pour s\'implanter sur le marché local.',
+    details: 'Une mission de prospection ciblée permettant aux fabricants turcs d\'articles de cuisine et de table de rencontrer des acheteurs stratégiques.',
     results: { meetings: 250, buyers: 44 },
   },
   {
@@ -236,6 +243,7 @@ const allEvents = [
         </motion.div>
       </section>
 
+      {/* ── Event detail modal ── */}
       <AnimatePresence>
         {selectedEvent && (
           <>
@@ -254,17 +262,9 @@ const allEvents = [
               exit={{ opacity: 0, x: '-50%', y: '-45%' }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             >
-              <button
-                className="modal-close"
-                onClick={() => setSelectedEvent(null)}
-              >
+              <button className="modal-close" onClick={() => setSelectedEvent(null)}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path
-                    d="M2 2l12 12M14 2L2 14"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                  />
+                  <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                 </svg>
               </button>
 
@@ -301,12 +301,23 @@ const allEvents = [
 
               {selectedEvent.type === 'past' && selectedEvent.photos?.length > 0 && (
                 <div className="modal-photos-section">
-                  <p className="modal-photos-label">Event Gallery</p>
+                  <p className="modal-photos-label">Event Gallery <span className="photos-hint">tap to enlarge</span></p>
                   <div className="modal-photos-grid">
                     {selectedEvent.photos.map((src, i) => (
-                      <div key={i} className="modal-photo-item">
-                        <img src={src} className="modal-photo-img" alt={`${selectedEvent.name} ${i + 1}`} loading="lazy" />
-                      </div>
+                      <button
+                        key={i}
+                        className="modal-photo-item"
+                        onClick={() => setLightboxSrc(src)}
+                        aria-label={`View photo ${i + 1}`}
+                      >
+                        <img
+                          src={src}
+                          className="modal-photo-img"
+                          alt={`${selectedEvent.name} ${i + 1}`}
+                          loading="lazy"
+                        />
+                        <div className="photo-zoom-icon">⤢</div>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -327,6 +338,35 @@ const allEvents = [
               </div>
             </motion.div>
           </>
+        )}
+      </AnimatePresence>
+
+      {/* ── Lightbox ── */}
+      <AnimatePresence>
+        {lightboxSrc && (
+          <motion.div
+            className="lightbox-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setLightboxSrc(null)}
+          >
+            <motion.img
+              src={lightboxSrc}
+              className="lightbox-img"
+              initial={{ scale: 0.85, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.85, opacity: 0 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+            />
+            <button className="lightbox-close" onClick={() => setLightboxSrc(null)}>
+              <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
+                <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              </svg>
+            </button>
+          </motion.div>
         )}
       </AnimatePresence>
 
@@ -398,9 +438,6 @@ const allEvents = [
           flex-direction: column;
           justify-content: space-between;
           height: 100%;
-        }
-
-        .event-card {
           transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
           position: relative;
           overflow: hidden;
@@ -411,9 +448,7 @@ const allEvents = [
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .event-card:hover .event-name {
-          color: var(--orange);
-        }
+        .event-card:hover .event-name { color: var(--orange); }
 
         .event-card:hover .view-event-cta {
           color: var(--color-third);
@@ -424,18 +459,14 @@ const allEvents = [
         .event-card::before {
           content: '';
           position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 3px;
+          top: 0; left: 0;
+          width: 100%; height: 3px;
           transform: scaleX(0);
           transition: transform 0.3s ease;
           transform-origin: left;
         }
 
-        .event-card:hover::before {
-          transform: scaleX(1);
-        }
+        .event-card:hover::before { transform: scaleX(1); }
 
         .event-name {
           color: var(--color-text-primary);
@@ -497,13 +528,11 @@ const allEvents = [
 
         .modal-close {
           position: absolute;
-          top: 1.4rem;
-          right: 1.4rem;
+          top: 1.4rem; right: 1.4rem;
           background: rgba(255, 255, 255, 0.06);
           border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 50%;
-          width: 36px;
-          height: 36px;
+          width: 36px; height: 36px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -558,9 +587,7 @@ const allEvents = [
           margin-bottom: 1.4rem;
         }
 
-        .modal-section {
-          margin-bottom: 1.5rem;
-        }
+        .modal-section { margin-bottom: 1.5rem; }
 
         .modal-section-title {
           font-size: 0.75rem;
@@ -644,28 +671,7 @@ const allEvents = [
           opacity: 0.5;
         }
 
-        .modal-photos-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 0.6rem;
-          margin-top: 1rem;
-        }
-
-        .modal-photo-item {
-          aspect-ratio: 4 / 3;
-          border-radius: 4px;
-          overflow: hidden;
-          background: rgba(255, 255, 255, 0.04);
-        }
-
-        .modal-photo-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-          opacity: 0.85;
-        }
-
+        /* ── Photo gallery ── */
         .modal-photos-label {
           font-size: 0.75rem;
           text-transform: uppercase;
@@ -673,15 +679,109 @@ const allEvents = [
           color: var(--color-text-primary);
           margin-bottom: 0.5rem;
           opacity: 0.9;
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
         }
 
+        .photos-hint {
+          font-size: 0.65rem;
+          opacity: 0.4;
+          text-transform: none;
+          letter-spacing: 0;
+        }
+
+        .modal-photos-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.6rem;
+          margin-top: 1rem;
+        }
+
+        /* Photo thumb — now a button for accessibility */
+        .modal-photo-item {
+          aspect-ratio: 4 / 3;
+          border-radius: 4px;
+          overflow: hidden;
+          background: rgba(255, 255, 255, 0.04);
+          border: none;
+          padding: 0;
+          cursor: zoom-in;
+          position: relative;
+          display: block;
+        }
+
+        .modal-photo-item:hover .photo-zoom-icon { opacity: 1; }
+        .modal-photo-item:hover .modal-photo-img { opacity: 1; transform: scale(1.05); }
+
+        .modal-photo-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          opacity: 0.85;
+          transition: opacity 0.2s ease, transform 0.3s ease;
+        }
+
+        .photo-zoom-icon {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.4rem;
+          color: white;
+          background: rgba(0, 0, 0, 0.35);
+          opacity: 0;
+          transition: opacity 0.2s ease;
+        }
+
+        /* ── Lightbox ── */
+        .lightbox-overlay {
+          position: fixed;
+          inset: 0;
+          z-index: 1300;
+          background: rgba(0, 0, 0, 0.92);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 1rem;
+          cursor: zoom-out;
+        }
+
+        .lightbox-img {
+          max-width: 100%;
+          max-height: 90vh;
+          border-radius: 6px;
+          object-fit: contain;
+          cursor: default;
+          box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+        }
+
+        .lightbox-close {
+          position: absolute;
+          top: 1.2rem;
+          right: 1.2rem;
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 50%;
+          width: 44px;
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          color: white;
+          transition: background 0.2s ease;
+        }
+
+        .lightbox-close:hover { background: rgba(255, 255, 255, 0.2); }
+
         @media (max-width: 768px) {
-          .events-grid {
-            grid-template-columns: 1fr;
-          }
-          .modal-results-grid {
-            grid-template-columns: 1fr;
-          }
+          .events-grid { grid-template-columns: 1fr; }
+          .modal-results-grid { grid-template-columns: 1fr; }
+          .modal-panel { padding: 2rem 1.25rem 1.5rem; }
+          .modal-photos-grid { grid-template-columns: repeat(2, 1fr); }
         }
       `}</style>
     </>

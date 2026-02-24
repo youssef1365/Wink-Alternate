@@ -16,7 +16,7 @@ const Services = ({ isActive, scrollVelocity }) => {
     restDelta: 0.001
   };
 
-  const y = useSpring(useTransform(scrollYProgress, [0, 0.2, 0.8, 1], ["20vh", "0vh", "0vh", "-10vh"]), springConfig);
+  const y = useSpring(useTransform(scrollYProgress,  [0, 0.05, 0.65, 1],["90vh", "0vh", "0vh", "-25vh"]), springConfig);
   const opacity = useSpring(useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]), springConfig);
   const contentOp = useTransform(scrollYProgress, [0.15, 0.3], [0, 1]);
 
@@ -29,7 +29,7 @@ const Services = ({ isActive, scrollVelocity }) => {
   return (
     <>
       <style>{`
-        .services-wrapper { min-height: 300vh; position: relative; background: var(--color-bg); }
+        .services-wrapper { min-height: 200vh; position: relative; background: var(--color-bg); }
         .services-sticky { position: sticky; top: 90px; height: calc(100vh - 90px); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 0 1.5rem; }
         .services-card { width: 100%; max-width: 1400px; height: 85vh; max-height: 700px; border-radius: 16px; box-shadow: 0 32px 80px rgba(0, 77, 77, 0.4); overflow: hidden; position: relative; background: linear-gradient(to bottom right, rgba(44, 62, 80, 0.95), rgba(0, 77, 77, 0.95)); backdrop-filter: blur(24px); border: 1px solid rgba(127, 205, 205, 0.15); will-change: transform; }
         .services-content { position: relative; z-index: 1; height: 100%; padding: clamp(2rem, 4vw, 4rem); display: flex; flex-direction: column; }
@@ -44,7 +44,7 @@ const Services = ({ isActive, scrollVelocity }) => {
         .service-description { font-size: 0.9rem; color: var(--extra-color-fifth); line-height: 1.7; }
 
         @media (max-width: 1024px) {
-          .services-wrapper { min-height: auto; padding: 4rem 1rem; }
+          .services-wrapper { min-height: 260vh;; padding: 4rem 1rem; }
           .services-sticky { position: relative; top: 0; height: auto; overflow: visible; padding: 0; }
           .services-card { height: auto; max-height: none; transform: none !important; opacity: 1 !important; box-shadow: none; border: none; background: none; backdrop-filter: none; }
           .services-content { padding: 0; opacity: 1 !important; }
