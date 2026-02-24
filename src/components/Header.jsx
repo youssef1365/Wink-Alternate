@@ -19,7 +19,6 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
     const handleScroll = () => {
       const currentY = window.scrollY;
       setIsScrolled(currentY > 50);
-      // Never hide the header when mobile menu is open
       if (!mobileMenuOpen) {
         setHidden(currentY > lastY.current && currentY > 300 && scrollVelocity > 1.5);
       }
@@ -36,7 +35,6 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
     return unsubscribe;
   }, [scrollProgress]);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -107,8 +105,11 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
             <button className="cta-button-high-end desktop-only" onClick={() => window.dispatchEvent(new Event('openContactModal'))}>
               <span className="cta-text">Start a Project</span>
             </button>
-
-            <button className={`hamburger-menu ${mobileMenuOpen ? 'is-active' : ''}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            <button
+              className={`hamburger-menu ${mobileMenuOpen ? 'is-active' : ''}`}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
               <span className="line"></span>
               <span className="line"></span>
             </button>
@@ -122,12 +123,14 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
             className="mobile-overlay"
           >
             <ul className="mobile-links">
               {navItems.map((item) => (
-                <li key={item}><a href={`#${item}`} onClick={(e) => handleNavClick(e, item)}>{item}</a></li>
+                <li key={item}>
+                  <a href={`#${item}`} onClick={(e) => handleNavClick(e, item)}>{item}</a>
+                </li>
               ))}
               <li><a href="#about" onClick={(e) => handleNavClick(e, 'about')}>Wink</a></li>
               <li className="mobile-cta-wrapper">
@@ -150,27 +153,41 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           width: 100%;
           padding: 1.1rem 0;
           background: transparent;
-          transition: all 0.5s ease;
+          transition: padding 0.5s ease, backdrop-filter 0.5s ease;
         }
 
         .header.scrolled {
           padding: 0.35rem 0;
           backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
           border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* When mobile menu is open, always keep backdrop visible regardless of scroll */
         .header.mobile-active {
-          backdrop-filter: blur(24px) !important;
-          -webkit-backdrop-filter: blur(24px) !important;
-          background: transparent !important;
-          padding: 1.1rem 0 !important;
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
           border-bottom: none !important;
+          background: transparent !important;
+        }
+
+        .progress-bar {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+        }
+
+        .progress-fill {
+          height: 100%;
+          background: var(--color-teal, var(--color-one));
         }
 
         .nav-container {
           width: 100%;
           padding: 0 4vw;
+          position: relative;
+          z-index: 1002;
         }
 
         .nav {
@@ -178,13 +195,9 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           justify-content: space-between;
           align-items: center;
           width: 100%;
-          position: relative;
         }
 
-        .nav-logo {
-          flex-shrink: 0;
-          min-width: 220px;
-        }
+        .nav-logo { flex-shrink: 0; min-width: 220px; }
 
         .dynamic-logo {
           height: 64px;
@@ -196,24 +209,19 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
         }
 
         .theme-toggle-minimal {
-          background-color: transparent;
+          background: transparent;
           border: none;
           height: 44px;
           width: 44px;
+          padding: 0;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 0;
+          flex-shrink: 0;
         }
 
-        .theme-icon {
-          font-size: 1.4rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          line-height: 1;
-        }
+        .theme-icon { font-size: 1.4rem; line-height: 1; }
 
         .nav-links {
           display: flex;
@@ -245,50 +253,10 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           background: none;
         }
 
-        .nav-link-dot {
-          position: absolute;
-          bottom: -2px;
-          left: 50%;
-          transform: translateX(-50%) scale(0);
-          width: 3px;
-          height: 3px;
-          border-radius: 50%;
-          background: var(--color-third);
-          transition: transform 0.3s ease;
-        }
-
-        .nav-link.active .nav-link-dot {
-          transform: translateX(-50%) scale(1);
-        }
-
-        .dropdown-list {
-          position: absolute;
-          top: calc(100% + 12px);
-          left: 50%;
-          transform: translateX(-50%);
-          min-width: 160px;
-          background: var(--extra-color-one);
-          border-radius: 8px;
-          padding: 0.6rem 0;
-          list-style: none;
-          border: 1px solid rgba(255, 255, 255, 0.07);
-        }
-
-        .dropdown-list li a {
-          padding: 0.65rem 1.4rem;
-          color: var(--color-third);
-          text-decoration: none;
-          display: block;
-          font-size: 0.62rem;
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.18em;
-        }
-
         .nav-cta {
           display: flex;
           align-items: center;
-          gap: 1rem;
+          gap: 0.5rem;
         }
 
         .cta-button-high-end {
@@ -305,13 +273,8 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           transition: all 0.3s ease;
         }
 
-        .cta-button-high-end:hover {
-          background-color: var(--color-fourth);
-        }
-
-        .cta-button-high-end:active {
-          transform: scale(0.98);
-        }
+        .cta-button-high-end:hover { background-color: var(--color-fourth); }
+        .cta-button-high-end:active { transform: scale(0.98); }
 
         .hamburger-menu {
           display: none;
@@ -319,73 +282,64 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           justify-content: center;
           align-items: center;
           gap: 6px;
-          background: transparent;
+          background: none;
           border: none;
           cursor: pointer;
           height: 44px;
           width: 44px;
           padding: 0;
+          flex-shrink: 0;
+          position: relative;
+          z-index: 1003;
         }
 
         .hamburger-menu .line {
+          display: block;
           width: 24px;
           height: 2px;
           background: var(--color-third);
-          transition: transform 0.3s ease, opacity 0.3s ease;
+          border-radius: 2px;
+          transition: transform 0.3s ease;
           transform-origin: center;
         }
 
         .hamburger-menu.is-active .line:nth-child(1) {
           transform: translateY(4px) rotate(45deg);
         }
-
         .hamburger-menu.is-active .line:nth-child(2) {
           transform: translateY(-4px) rotate(-45deg);
         }
 
         @media (max-width: 1024px) {
-          .desktop-only {
-            display: none !important;
-          }
+          .desktop-only { display: none !important; }
+          .hamburger-menu { display: flex; }
+          .nav-logo { min-width: auto; }
+          .dynamic-logo { width: 140px; height: 40px; }
 
-          .hamburger-menu {
-            display: flex;
-            z-index: 1002;
-          }
-
-          .nav-links {
-            display: none;
-          }
-
-          .nav-logo {
-            min-width: auto;
-          }
-
-          .dynamic-logo {
-            width: 140px;
-            height: 40px;
-          }
-
-          .nav-cta {
-            gap: 0.25rem;
-          }
-
+          /*
+            THE FIX: Use a solid opaque background color.
+            backdrop-filter alone is invisible on Android Chrome / many mobile browsers
+            unless there is an actual background-color with opacity behind it.
+            We use the site's dark bg color at near-full opacity so content
+            behind is fully hidden, just like a native menu.
+          */
           .mobile-overlay {
-            display: flex;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 100dvh;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
+            bottom: 0;
+            /* Solid dark background — fully covers the page behind it */
+            background: var(--color-bg, #050e14);
+            /* Optional frosted glass on top of that for devices that support it */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 1001;
             overflow: hidden;
-            pointer-events: all;
           }
 
           .mobile-links {
@@ -395,9 +349,7 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
             margin: 0;
           }
 
-          .mobile-links li {
-            margin: 1.5rem 0;
-          }
+          .mobile-links li { margin: 1.5rem 0; }
 
           .mobile-links a {
             color: var(--color-third);
@@ -405,11 +357,10 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
             text-transform: uppercase;
             font-weight: 800;
             text-decoration: none;
+            letter-spacing: 0.1em;
           }
 
-          .mobile-cta-wrapper {
-            margin-top: 2rem !important;
-          }
+          .mobile-cta-wrapper { margin-top: 2rem !important; }
 
           .mobile-cta {
             font-size: 1.1rem;

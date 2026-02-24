@@ -1,13 +1,15 @@
 import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from 'framer-motion';
 import { useRef, useState } from 'react';
 
-export default function AboutUs() {
+export default function AboutUs({ isMobile }) {
   const containerRef = useRef(null);
   const [slideIndex, setSlideIndex] = useState(0);
 
+  // We keep the target specific to this container so the 300vh height
+  // correctly triggers the Mission/Vision swap as you scroll past.
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"]
+    offset: ["start start", "end end"] // Changed to start-start for stickier sync
   });
 
   const springConfig = {
@@ -18,11 +20,7 @@ export default function AboutUs() {
   };
 
   const y = useSpring(
-    useTransform(
-      scrollYProgress,
-      [0, 0.1, 0.8, 1],
-      ["20vh", "0vh", "0vh", "-10vh"]
-    ),
+    useTransform(scrollYProgress, [0, 0.1, 0.8, 1], ["10vh", "0vh", "0vh", "-10vh"]),
     springConfig
   );
 
@@ -33,13 +31,11 @@ export default function AboutUs() {
 
   const col1Y = useTransform(scrollYProgress, [0.1, 0.3], ["40px", "0px"]);
 
-  const slideTrigger = useTransform(scrollYProgress, v => {
-    if (v < 0.5) return 0;
-    return 1;
-  });
+  // Slide trigger logic
+  const slideTrigger = useTransform(scrollYProgress, v => (v < 0.5 ? 0 : 1));
 
   useMotionValueEvent(slideTrigger, "change", (v) => {
-    setSlideIndex(v);
+    if (v !== slideIndex) setSlideIndex(v);
   });
 
   const vmSlides = [
@@ -48,12 +44,15 @@ export default function AboutUs() {
   ];
 
   return (
-    <section ref={containerRef} className="aus-wrapper" id="about">
+    <section ref={containerRef} className="aus-wrapper">
       <div className="aus-sticky">
-        <motion.div className="aus-card" style={{ y, opacity }}>
+        <motion.div
+          className="aus-card"
+          style={{ y: isMobile ? 0 : y, opacity }}
+          layout // Helps maintain smoothness during parent re-renders
+        >
           <div className="aus-grid">
-            {/* LEFT COLUMN: The Narrative */}
-            <motion.div className="aus-left" style={{ y: col1Y }}>
+            <motion.div className="aus-left" style={{ y: isMobile ? 0 : col1Y }}>
               <div className="aus-header">
                 <span className="aus-eyebrow">WINK Agency</span>
                 <h2 className="aus-heading">The Wink Way.</h2>
@@ -66,13 +65,11 @@ export default function AboutUs() {
                 </div>
                 <p className="aus-narrative-text">
                   Wink integrates advanced matchmaking systems and structured meeting management tools
-                  to ensure <span className="text-highlight">precision, scalability, and efficiency</span> —
-                  enhancing human expertise with intelligent systems.
+                  to ensure <span className="text-highlight">precision and efficiency</span>.
                 </p>
               </div>
             </motion.div>
 
-            {/* RIGHT COLUMN: Mission & Vision */}
             <div className="aus-right">
               {vmSlides.map((slide, i) => (
                 <div
@@ -86,10 +83,7 @@ export default function AboutUs() {
 
               <div className="aus-vm-nav">
                 {vmSlides.map((_, i) => (
-                  <div
-                    key={i}
-                    className={`aus-vm-dot ${i === slideIndex ? 'active' : ''}`}
-                  />
+                  <div key={i} className={`aus-vm-dot ${i === slideIndex ? 'active' : ''}`} />
                 ))}
               </div>
             </div>
@@ -101,7 +95,7 @@ export default function AboutUs() {
         .aus-wrapper {
           min-height: 300vh;
           position: relative;
-          background: var(--bg-primary);
+          background: var(--bg-primary); /* Uses your charcoal global var */
         }
 
         .aus-sticky {
@@ -120,16 +114,12 @@ export default function AboutUs() {
           height: 75vh;
           background: var(--bg-secondary);
           border-radius: 32px;
-          box-shadow: 0 40px 100px rgba(0,0,0,0.2);
+          box-shadow: 0 40px 100px rgba(0,0,0,0.3);
           overflow: hidden;
-          border: 1px solid rgba(209, 219, 220, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .aus-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          height: 100%;
-        }
+        .aus-grid { display: grid; grid-template-columns: 1fr 1fr; height: 100%; }
 
         .aus-left {
           display: flex;
@@ -142,10 +132,10 @@ export default function AboutUs() {
           font-size: 0.8rem;
           text-transform: uppercase;
           letter-spacing: 0.4em;
-          color: var(--color-teal);
+          color: var(--brand-orange); /* Updated to your brand color */
           font-weight: 800;
-          display: block;
           margin-bottom: 1rem;
+          display: block;
         }
 
         .aus-heading {
@@ -155,31 +145,11 @@ export default function AboutUs() {
           color: var(--text-main);
         }
 
-        .aus-values-label {
-          font-size: 1.2rem;
-          text-transform: uppercase;
-          color: var(--text-main);
-          margin-bottom: 1rem;
-          opacity: 0.6;
-        }
-
-        .aus-tech-highlight {
-          font-weight: 900;
-          color: var(--text-main);
-          opacity: 1;
-        }
-
-        .aus-narrative-text {
-          font-size: clamp(1rem, 1.2vw, 1.4rem);
-          line-height: 1.6;
-          color: var(--text-main);
-          max-width: 500px;
-        }
-
-        .text-highlight { color: var(--color-teal); }
+        .aus-tech-highlight { font-weight: 900; color: var(--text-main); }
+        .text-highlight { color: var(--brand-orange); }
 
         .aus-right {
-          background: linear-gradient(155deg, var(--color-navy) 0%, #001a26 100%);
+          background: var(--brand-charcoal); /* Updated to your brand color */
           position: relative;
           overflow: hidden;
         }
@@ -202,7 +172,7 @@ export default function AboutUs() {
         .aus-vm-label {
           font-size: clamp(3rem, 6vw, 5rem);
           text-transform: uppercase;
-          color: var(--color-teal);
+          color: var(--brand-orange);
           font-weight: 900;
           line-height: 1;
           margin-bottom: 1.5rem;
@@ -211,111 +181,28 @@ export default function AboutUs() {
         .aus-vm-text {
           font-size: clamp(1.1rem, 1.5vw, 1.6rem);
           line-height: 1.5;
-          color: var(--color-silver);
+          color: #eee;
           max-width: 450px;
-        }
-
-        .aus-vm-nav {
-          position: absolute;
-          bottom: 3rem;
-          left: clamp(2rem, 5vw, 5rem);
-          display: flex;
-          gap: 0.8rem;
         }
 
         .aus-vm-dot {
           height: 4px;
           width: 20px;
-          background: rgba(209, 219, 220, 0.2);
+          background: rgba(255, 255, 255, 0.2);
           transition: 0.4s ease;
           border-radius: 2px;
         }
 
         .aus-vm-dot.active {
-          background: var(--color-teal);
+          background: var(--brand-orange);
           width: 60px;
         }
 
-        /* ── Mobile ─────────────────────────────────────────────────────────── */
         @media (max-width: 1024px) {
-          /* Give the wrapper enough room for both panels stacked */
-          .aus-wrapper {
-            min-height: auto;
-          }
-
-          /* On mobile we don't want sticky scroll-jacking —
-             just let the card sit naturally in the flow */
-          .aus-sticky {
-            position: relative;
-            height: auto;
-            padding: 6rem 0 4rem;
-            overflow: visible;
-          }
-
-          /* Card grows to fit its content */
-          .aus-card {
-            height: auto;
-            width: 92vw;
-            border-radius: 24px;
-            overflow: visible; /* let content breathe */
-          }
-
-          /* Stack left then right */
-          .aus-grid {
-            grid-template-columns: 1fr;
-            height: auto;
-          }
-
-          .aus-left {
-            padding: 2.5rem 2rem;
-            gap: 2rem;
-          }
-
-          .aus-heading {
-            font-size: clamp(2rem, 8vw, 3rem);
-          }
-
-          .aus-narrative-text {
-            font-size: 1rem;
-          }
-
-          /* Show the right panel on mobile — just make it static, not absolute */
-          .aus-right {
-            display: block;
-            border-radius: 0 0 24px 24px;
-            min-height: 280px;
-            position: relative; /* already set but ensure no absolute weirdness */
-          }
-
-          /* Slides: stack and show both, or keep the active-only logic */
-          .aus-vm-slide {
-            position: relative;
-            inset: auto;
-            padding: 2.5rem 2rem;
-            opacity: 0;
-            transform: translateY(30px);
-            /* keep transition for the JS-driven active class */
-          }
-
-          .aus-vm-slide.active {
-            opacity: 1;
-            transform: translateY(0);
-          }
-
-          .aus-vm-label {
-            font-size: clamp(2rem, 8vw, 3rem);
-          }
-
-          .aus-vm-text {
-            font-size: 1rem;
-          }
-
-          .aus-vm-nav {
-            position: relative;
-            bottom: auto;
-            left: auto;
-            padding: 0 2rem 2rem;
-          }
+          .aus-grid { grid-template-columns: 1fr; }
+          .aus-right { display: none; }
+          .aus-card { height: auto; padding-bottom: 3rem; margin-top: 10vh; }
+          .aus-wrapper { min-height: 120vh; }
         }
       `}</style>
     </section>
