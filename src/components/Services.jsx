@@ -44,7 +44,7 @@ const Services = ({ isActive, scrollVelocity }) => {
         .service-description { font-size: 0.9rem; color: var(--extra-color-fifth); line-height: 1.7; }
 
         @media (max-width: 1024px) {
-          .services-wrapper { min-height: 260vh;; padding: 4rem 1rem; }
+          .services-wrapper { min-height: auto; padding: 4rem 1rem; }
           .services-sticky { position: relative; top: 0; height: auto; overflow: visible; padding: 0; }
           .services-card { height: auto; max-height: none; transform: none !important; opacity: 1 !important; box-shadow: none; border: none; background: none; backdrop-filter: none; }
           .services-content { padding: 0; opacity: 1 !important; }

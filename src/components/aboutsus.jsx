@@ -12,17 +12,19 @@ export default function AboutUs({ isActive, scrollVelocity }) {
   });
 
   const springConfig = {
-    stiffness: 65,
-    damping: 28,
-    mass: 0.7,
+    stiffness: 55,
+    damping: 30,
+    mass: 0.8,
     restDelta: 0.001
   };
 
-  const y = useSpring(
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+
+  const y = isMobile ? 0 : useSpring(
     useTransform(
       scrollYProgress,
-      [0, 0.03, 0.8, 1],
-      ["90vh", "0vh", "0vh", "-25vh"]
+      [0, 0.06, 0.7, 1],
+      ["60vh", "0vh", "0vh", "-15vh"]
     ),
     springConfig
   );
@@ -123,9 +125,14 @@ export default function AboutUs({ isActive, scrollVelocity }) {
           .aus-heading { font-size: 2.5rem; }
           .aus-values-label { margin-top: 1rem; font-size: 1.1rem; }
           .aus-vm-label { font-size: 2.8rem; }
-          .aus-sticky { top: 80px; height: calc(100vh - 80px); }
-          .aus-wrapper {
-              min-height: 320vh;
+            .aus-wrapper {
+              min-height: auto;
+            }
+            .aus-sticky {
+              position: relative;
+              height: auto;
+              top: 0;
+            }
           }
         }
       `}</style>
