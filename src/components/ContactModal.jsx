@@ -97,12 +97,20 @@ export default function ContactModal() {
                     <input type="email" name="email" placeholder="email@company.com" required />
                   </div>
                   <div className="input-group">
-                    <label>Country / Region</label>
-                    <input type="text" name="country" placeholder="e.g. Morocco, UAE" required />
+                      <label>Phone Number</label>
+                      <input type="number" name ="phone" placeholder="Contact" required/>
                   </div>
+
                 </div>
 
+
                 <div className="input-group full-width spaced-group">
+                    <label>Country / Region</label>
+                    <input type="text" name="country" placeholder="e.g. Morocco, UAE" required />
+                </div>
+                <div className="input-group full-width spaced-group">
+
+
                   <label>Area of Interest</label>
                   <select name="interest" required>
                     <option value="">Select an option</option>
@@ -112,13 +120,15 @@ export default function ContactModal() {
                   </select>
                 </div>
 
+
+
                 <div className="input-group full-width spaced-group">
                   <label>Objectives / Context</label>
                   <textarea name="objectives" rows="4" placeholder="Briefly describe your goals..." />
                 </div>
 
                 <button type="submit" className="submit-btn" disabled={isSubmitting}>
-                  {isSubmitting ? "Sending..." : "Request a discussion"}
+                  {isSubmitting ? "Sending..." : "Submit your request"}
                 </button>
 
                 {statusMessage && (

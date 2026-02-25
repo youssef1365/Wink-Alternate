@@ -77,7 +77,6 @@ const Services = ({ isActive, scrollVelocity }) => {
                   return (
                     <motion.div key={service.id} className="service-item">
                       <div className="service-ghost-number">{service.id}</div>
-                      <span className="service-number">{service.id}</span>
                       <h3 className="service-title">{service.title}</h3>
                       <p className="service-description">{service.description}</p>
                     </motion.div>

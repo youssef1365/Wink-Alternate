@@ -144,7 +144,7 @@ const Packages = () => {
         .packages-subheading {
           font-size: 0.88rem;
           font-weight: 400;
-          color: var(--color-text-secondary, rgba(255,255,255,0.5));
+          color: var(--color-bg-third);
           letter-spacing: 0.06em;
           margin: 0 0 clamp(2rem, 4vw, 3rem) 0;
           text-align: center;
@@ -221,11 +221,10 @@ const Packages = () => {
 
         .card-tag {
           font-size: 0.58rem;
-          font-weight: 600;
+          font-weight: bold;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: var(--color-bg);
-          opacity: 0.18;
+          color: var(--color-third);
           border: 1px solid rgba(255,255,255,0.1);
           padding: 0.2rem 0.55rem;
           border-radius: 100px;

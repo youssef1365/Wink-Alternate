@@ -132,12 +132,8 @@ export default function ScrollController() {
         <Vision
           isActive={activeSection === "vision1"}
           text={[
-            "DEEP",
-            { word: "HUMAN", color: "var(--color-one)" },
-            { word: "EXPERTISE", color: "var(--color-one)" },
-            "MAKES",
-            { word: "SMART", color: "var(--color-one)" },
-            { word: "CONNECTIONS", color: "var(--color-one)" }
+            "POWERED BY SMART ",
+            { word: "THECHNOLOGIES", color: "var(--color-one)" },
           ]}
         />
       </div>
