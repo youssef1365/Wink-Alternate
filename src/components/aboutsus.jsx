@@ -11,13 +11,6 @@ export default function AboutUs({ isActive, scrollVelocity }) {
     offset: ["start end", "end start"]
   });
 
-  const springConfig = {
-    stiffness: 280,
-    damping: 28,
-    mass: 0.4,
-    restDelta: 0.001
-  };
-
   const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
 
   const scrollDistanceStart = isMobile ? 0 : 80;
@@ -80,24 +73,50 @@ export default function AboutUs({ isActive, scrollVelocity }) {
         }
         .aus-grid { display: grid; grid-template-columns: 1fr 1fr; height: 100%; }
         .aus-left {
-            display: flex;
-            flex-direction: column;
-            padding: clamp(1.5rem, 3.5vw, 4rem);
-            border-right: 1px solid rgba(0,62,86,0.1);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: clamp(1.5rem, 3.5vw, 4rem);
+          border-right: 1px solid rgba(0,62,86,0.1);
+          gap: 2.5rem;
+          position: relative;
         }
-        .aus-eyebrow { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.3em; color: rgba(0,62,86,0.4); margin-bottom: 0.5rem; font-weight: 700; }
-        .aus-heading { font-size: clamp(2.2rem, 4.5vw, 4.5rem); font-weight: 900; line-height: 1; color: #003f5c; margin-bottom: 1.5rem; }
-        .aus-values-label { font-size: 1.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(0,62,86,0.3); margin-top: auto; margin-bottom: 0.5rem; }
-
-        .aus-narrative-text {
-          font-size: clamp(1rem, 1.4vw, 1.6rem);
-          line-height: 1.5;
-          color: rgba(0,62,86,0.7);
-          font-weight: 500;
-        }
-        .text-highlight {
-          color: #17b8c8;
+        .aus-eyebrow {
+          font-size: 0.75rem;
+          text-transform: uppercase;
+          letter-spacing: 0.35em;
+          color: rgba(0,62,86,0.35);
           font-weight: 700;
+          text-align: center;
+        }
+        .aus-logo-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex: 1;
+        }
+        .aus-logo {
+          width: clamp(170px, 23vw, 290px);
+          height: auto;
+          object-fit: contain;
+          opacity: 0.92;
+        }
+        .aus-divider {
+          width: 40px;
+          height: 1.5px;
+          background: rgba(0,62,86,0.15);
+          border-radius: 2px;
+        }
+        .aus-tagline {
+          font-size: clamp(0.7rem, 0.9vw, 0.85rem);
+          text-transform: uppercase;
+          letter-spacing: 0.25em;
+          color: rgba(0,62,86,0.3);
+          font-weight: 600;
+          text-align: center;
+          max-width: 220px;
+          line-height: 1.6;
         }
 
         .aus-right { background: linear-gradient(155deg, #0d4a62 0%, #071e2b 100%); position: relative; overflow: hidden; }
@@ -119,23 +138,15 @@ export default function AboutUs({ isActive, scrollVelocity }) {
         .aus-vm-nav { position: absolute; bottom: 2rem; left: clamp(1.5rem, 5vw, 4rem); display: flex; gap: 0.6rem; align-items: center; }
         .aus-vm-dot { height: 4px; background: rgba(255,255,255,0.2); transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); border-radius: 2px; }
         .aus-vm-dot.active { background: #17b8c8; width: 50px !important; }
-        .aus-tech-highlight { font-weight: bold; }
 
         @media (max-width: 1024px) {
           .aus-grid { grid-template-columns: 1fr; grid-template-rows: 1.2fr 1fr; }
-          .aus-left { border-right: none; border-bottom: 1px solid rgba(0,62,86,0.1); padding: 1.5rem; }
+          .aus-left { border-right: none; border-bottom: 1px solid rgba(0,62,86,0.1); padding: 1.5rem; gap: 1.2rem; }
           .aus-card { height: 85vh; max-height: none; }
-          .aus-heading { font-size: 2.5rem; }
-          .aus-values-label { margin-top: 1rem; font-size: 1.1rem; }
           .aus-vm-label { font-size: 2.8rem; }
-          .aus-wrapper {
-            min-height: auto;
-          }
-          .aus-sticky {
-            position: relative;
-            height: auto;
-            top: 0;
-          }
+          .aus-wrapper { min-height: auto; }
+          .aus-sticky { position: relative; height: auto; top: 0; }
+          .aus-logo { width: clamp(100px, 30vw, 160px); }
         }
       `}</style>
 
@@ -145,18 +156,12 @@ export default function AboutUs({ isActive, scrollVelocity }) {
             <motion.div className="aus-grid" style={{ opacity: contentOp }}>
 
               <div className="aus-left">
-                <div>
-                  <div className="aus-eyebrow">About Us</div>
-                  <h2 className="aus-heading">
-                    <span className="aus-tech-highlight">WINK</span>
-                  </h2>
+                <div className="aus-eyebrow">About Us</div>
+                <div className="aus-logo-wrap">
+                  <img src="/WinkBlue.png" alt="Wink" className="aus-logo" />
                 </div>
-                <div>
-                  <div className="aus-values-label"></div>
-                  <div className="aus-narrative-text">
-                    Wink integrates advanced matchmaking systems and structured meeting management tools to ensure precision, scalability, and efficiency — enhancing human expertise with intelligent systems.
-                  </div>
-                </div>
+                <div className="aus-divider" />
+                <div className="aus-tagline">Smart B2B Matchmaking & Event Management</div>
               </div>
 
               <div className="aus-right">

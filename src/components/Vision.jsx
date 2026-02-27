@@ -16,6 +16,21 @@ const Vision = ({ text, subtext, isActive }) => {
   const wordScrollStart = (i) => i / (tokens.length * 2.5);
   const wordScrollEnd   = (i) => wordScrollStart(i) + 0.28;
 
+  const lastWordEnd = wordScrollEnd(tokens.length - 1);
+
+  const subtextOpacity = useTransform(
+    scrollYProgress,
+    [lastWordEnd, lastWordEnd + 0.1, 0.88, 1],
+    [0, 1, 1, 0]
+  );
+  const subtextY = useTransform(
+    scrollYProgress,
+    [lastWordEnd, lastWordEnd + 0.1],
+    [20, 0]
+  );
+  const smoothSubtextOpacity = useSpring(subtextOpacity, { stiffness: 80, damping: 22 });
+  const smoothSubtextY       = useSpring(subtextY,       { stiffness: 80, damping: 22 });
+
   const sectionOpacity = useTransform(scrollYProgress, [0, 0.08, 0.88, 1], [0, 1, 1, 0]);
   const sectionY       = useTransform(scrollYProgress, [0, 0.12, 0.88, 1], [60, 0, 0, -40]);
 
@@ -75,10 +90,7 @@ const Vision = ({ text, subtext, isActive }) => {
         {subtext && (
           <motion.p
             className="vision-subtext"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
+            style={{ opacity: smoothSubtextOpacity, y: smoothSubtextY }}
           >
             {subtext}
           </motion.p>
@@ -152,15 +164,14 @@ const Vision = ({ text, subtext, isActive }) => {
         }
 
         .vision-subtext {
-          margin-top: 0;
-          margin-bottom: 0;
-          font-size: clamp(0.78rem, 1.1vw, 0.95rem);
-          color: var(--extra-color-third);
-          max-width: 560px;
-          line-height: 1.7;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          opacity: 0.7;
+          margin: 1.4rem 0 0 0;
+          font-size: clamp(0.82rem, 1.1vw, 1rem);
+          color: var(--color-third);
+          max-width: 620px;
+          line-height: 1.8;
+          letter-spacing: 0.03em;
+          opacity: 0.85;
+          font-weight: bold;
         }
       `}</style>
     </section>

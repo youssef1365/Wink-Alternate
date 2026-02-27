@@ -132,9 +132,10 @@ export default function ScrollController() {
         <Vision
           isActive={activeSection === "vision1"}
           text={[
-            "POWERED BY SMART ",
-            { word: "THECHNOLOGIES", color: "var(--color-one)" },
+            "POWERED BY ",
+            { word: "SMART TECHNOLOGIES", color: "var(--color-one)" },
           ]}
+          subtext="Wink integrates advanced matchmaking systems and structured meeting management tools to ensure precision, scalability, and efficiency — enhancing human expertise with intelligent systems."
         />
       </div>
 
