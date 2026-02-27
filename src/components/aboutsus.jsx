@@ -146,7 +146,7 @@ export default function AboutUs({ isActive, scrollVelocity }) {
           .aus-vm-label { font-size: 2.8rem; }
           .aus-wrapper { min-height: 250vh; }
           .aus-sticky { position: sticky; top: 0; height: 100vh; }
-          .aus-logo { width: clamp(100px, 30vw, 160px); }
+          .aus-logo { width: clamp(130px, 38vw, 200px); }
         }
       `}</style>
 
