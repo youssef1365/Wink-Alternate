@@ -97,7 +97,7 @@ export default function AboutUs({ isActive, scrollVelocity }) {
           flex: 1;
         }
         .aus-logo {
-          width: clamp(170px, 23vw, 290px);
+          width: clamp(140px, 18vw, 260px);
           height: auto;
           object-fit: contain;
           opacity: 0.92;
@@ -144,8 +144,8 @@ export default function AboutUs({ isActive, scrollVelocity }) {
           .aus-left { border-right: none; border-bottom: 1px solid rgba(0,62,86,0.1); padding: 1.5rem; gap: 1.2rem; }
           .aus-card { height: 85vh; max-height: none; }
           .aus-vm-label { font-size: 2.8rem; }
-          .aus-wrapper { min-height: auto; }
-          .aus-sticky { position: relative; height: auto; top: 0; }
+          .aus-wrapper { min-height: 250vh; }
+          .aus-sticky { position: sticky; top: 0; height: 100vh; }
           .aus-logo { width: clamp(100px, 30vw, 160px); }
         }
       `}</style>
