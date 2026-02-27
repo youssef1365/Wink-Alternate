@@ -135,9 +135,30 @@ export default function AboutUs({ isActive, scrollVelocity }) {
         .aus-vm-slide.prev { opacity: 0; transform: scale(1.03) translateY(-15px); }
         .aus-vm-label { font-size: clamp(3rem, 8vw, 6rem); text-transform: uppercase; letter-spacing: 0.1rem; color: var(--extra-color-fourth); margin-bottom: 1rem; font-weight: 800; line-height: 1.0; }
         .aus-vm-text { font-size: clamp(1rem, 1.8vw, 1.6rem); line-height: 1.5; color: white; font-weight: 500; }
-        .aus-vm-nav { position: absolute; bottom: 2rem; left: clamp(1.5rem, 5vw, 4rem); display: flex; gap: 0.6rem; align-items: center; }
-        .aus-vm-dot { height: 4px; background: rgba(255,255,255,0.2); transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); border-radius: 2px; }
-        .aus-vm-dot.active { background: #17b8c8; width: 50px !important; }
+        .aus-vm-nav {
+          position: absolute;
+          bottom: auto;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 2rem;
+          left: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 0.6rem;
+          align-items: center;
+        }
+        .aus-vm-dot {
+          width: 4px !important;
+          height: 20px;
+          background: rgba(255,255,255,0.2);
+          transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          border-radius: 2px;
+        }
+        .aus-vm-dot.active {
+          background: #17b8c8;
+          height: 50px !important;
+          width: 4px !important;
+        }
 
         @media (max-width: 1024px) {
           .aus-grid { grid-template-columns: 1fr; grid-template-rows: 1.2fr 1fr; }
@@ -147,6 +168,22 @@ export default function AboutUs({ isActive, scrollVelocity }) {
           .aus-wrapper { min-height: 250vh; }
           .aus-sticky { position: sticky; top: 0; height: 100vh; }
           .aus-logo { width: clamp(130px, 38vw, 200px); }
+          .aus-vm-nav {
+              top: auto;
+              bottom: 1.2rem;
+              right: auto;
+              left: clamp(1.5rem, 5vw, 4rem);
+              transform: none;
+              flex-direction: row;
+            }
+            .aus-vm-dot {
+              width: 20px !important;
+              height: 4px;
+            }
+            .aus-vm-dot.active {
+              width: 50px !important;
+              height: 4px !important;
+            }
         }
       `}</style>
 
