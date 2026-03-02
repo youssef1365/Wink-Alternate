@@ -341,7 +341,7 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
             left: 0;
             right: 0;
             bottom: 0;
-            background: var(--color-third);
+            background: var(--color-two);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             display: flex;
@@ -362,7 +362,7 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           .mobile-links li { margin: 1.5rem 0; }
 
           .mobile-links a {
-            color: var(--color-two);
+            color: var(--color-third);
             font-size: 1.5rem;
             text-transform: uppercase;
             font-weight: 800;
@@ -375,7 +375,7 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           .mobile-cta {
             font-size: 1.1rem;
             padding: 1.2rem 2.5rem;
-            color: var(--color-two);
+            color: var(--color-third);
             background: var(--color-bg);
           }
         }
