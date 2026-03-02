@@ -133,33 +133,37 @@ const Hero = ({ scrollVelocity = 0 }) => {
           justify-content: center;
         }
 
-        .cta-button {
-          background-color: var(--extra-color-third);
-          color: white;
-          border: none;
-          padding: 1rem 2rem;
-          border-radius: var(--border-radius);
-          font-weight: 900;
-          cursor: pointer;
-          transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-                      box-shadow 0.3s ease;
-        }
+       .cta-button {
+         background-color: var(--extra-color-third);
+         color: white;
+         border: 1.5px solid var(--color-1);
+         padding: 1rem 2rem;
+         border-radius: var(--border-radius);
+         font-weight: 900;
+         cursor: pointer;
+         transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                     box-shadow 0.3s ease;
+       }
 
-        .cta-button:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
+       .cta-button:hover {
+         transform: translateY(-2px);
+         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+       }
 
         .secondary-link {
           color: var(--color-third);
           text-decoration: none;
           font-weight: 500;
           font-size: 1.1rem;
-          transition: opacity 0.3s ease;
+          transition: opacity 0.3s ease, border-color 0.3s ease;
+          border: 1.5px solid rgba(255, 255, 255, 0.25);
+          border-radius: 100px;
+          padding: 0.6rem 1.4rem;
         }
 
         .secondary-link:hover {
           opacity: 0.7;
+          border-color: rgba(255, 255, 255, 0.6);
         }
 
         @media (max-width: 1024px) {

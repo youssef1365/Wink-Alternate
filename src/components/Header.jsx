@@ -335,22 +335,13 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           .nav-logo { min-width: auto; }
           .dynamic-logo { width: 140px; height: 40px; }
 
-          /*
-            THE FIX: Use a solid opaque background color.
-            backdrop-filter alone is invisible on Android Chrome / many mobile browsers
-            unless there is an actual background-color with opacity behind it.
-            We use the site's dark bg color at near-full opacity so content
-            behind is fully hidden, just like a native menu.
-          */
           .mobile-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            /* Solid dark background — fully covers the page behind it */
             background: var(--color-bg, #050e14);
-            /* Optional frosted glass on top of that for devices that support it */
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             display: flex;
@@ -371,7 +362,7 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           .mobile-links li { margin: 1.5rem 0; }
 
           .mobile-links a {
-            color: var(--color-third);
+            color: var(--color-two);
             font-size: 1.5rem;
             text-transform: uppercase;
             font-weight: 800;
@@ -384,7 +375,7 @@ const Header = ({ activeSection, scrollVelocity, scrollDirection, theme, setThem
           .mobile-cta {
             font-size: 1.1rem;
             padding: 1.2rem 2.5rem;
-            color: var(--color-third);
+            color: var(--color-two);
             background: var(--color-bg);
           }
         }

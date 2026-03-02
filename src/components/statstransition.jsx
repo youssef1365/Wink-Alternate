@@ -27,11 +27,11 @@ const Counter = ({ value, duration = 2 }) => {
 const StatsTransition = () => {
   const stats = [
     { label: "Years Experience", value: "15", suffix: "+" },
-    { label: "Events Managed",   value: "150", suffix: "+" },
+    { label: "Events Managed", value: "150", suffix: "+" },
     { label: "Countries Reached", value: "35", suffix: "+" },
-    { label: "Meetings Organized" , value: "50k", suffix: "+"},
-    { label: "Efficiency Ratings", value: "75%", suffix: "+"},
-    { label: "Customer Satisfaction", value: "90%", suffix:"+"}
+    { label: "Meetings Organized", value: "50", suffix: "k+" },
+    { label: "Efficiency Ratings", value: "75", prefix: "+", suffix: "%" },
+    { label: "Customer Satisfaction", value: "90", prefix: "+", suffix: "%" }
   ];
 
   return (
@@ -71,6 +71,7 @@ const StatsTransition = () => {
               transition={{ duration: 0.7, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="stat-value">
+                {stat.prefix && <span className="stat-prefix">{stat.prefix}</span>}
                 <Counter value={stat.value} />
                 <span className="stat-suffix">{stat.suffix}</span>
               </div>
@@ -150,6 +151,15 @@ const StatsTransition = () => {
           letter-spacing: -0.03em;
           display: flex;
           align-items: flex-start;
+        }
+
+        .stat-prefix {
+          font-size: 0.45em;
+          font-weight: 800;
+          color: var(--color-1, currentColor);
+          margin-top: 0.15em;
+          margin-right: 0.1em;
+          letter-spacing: 0;
         }
 
         .stat-suffix {
